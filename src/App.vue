@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import AppButton from './components/atoms/AppButton.vue'
-import AppIcon from './components/atoms/AppIcon.vue';
-import AppIconButton from './components/atoms/AppIconButton.vue';
-import AppInput from './components/atoms/AppInput.vue';
+import AppIcon from './components/atoms/AppIcon.vue'
+import AppIconButton from './components/atoms/AppIconButton.vue'
+import AppInput from './components/atoms/AppInput.vue'
+import SearchBar from './components/molecules/SearchBar.vue'
+import LocationWeatherCard from './components/molecules/LocationWeatherCard.vue'
 
 const email = ref('')
+const searchQuery = ref('')
 </script>
 
 <template>
@@ -35,6 +38,17 @@ const email = ref('')
       />
 
       <p>Current value: {{ email }}</p>
+
+      <SearchBar v-model="searchQuery" />
+
+      <LocationWeatherCard
+        location="Kuala Lumpur"
+        time="10:30 AM"
+        description="Partly cloudy"
+        :temperature="28"
+        :high="31"
+        :low="24"
+      />
     </section>
   </main>
 </template>
