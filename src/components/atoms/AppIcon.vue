@@ -5,7 +5,7 @@ import {
   CircleUserRound,
   Edit,
   Plus,
-  RefreshCw,
+  RotateCw,
   Search,
   Trash2,
 } from 'lucide-vue-next'
@@ -18,7 +18,7 @@ const icons = {
   profile: CircleUserRound,
   edit: Edit,
   plus: Plus,
-  refresh: RefreshCw,
+  refresh: RotateCw,
   search: Search,
   delete: Trash2,
 }

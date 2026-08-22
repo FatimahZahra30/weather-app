@@ -10,6 +10,7 @@ import LocationWeatherCard from './components/molecules/LocationWeatherCard.vue'
 import dayBackground from './assets/weather/day-background.jpg'
 import HourlyForcastCard from './components/molecules/HourlyForcastCard.vue'
 import WeeklyForcastItem from './components/molecules/WeeklyForcastItem.vue'
+import WeatherHero from './components/organisms/WeatherHero.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -70,6 +71,15 @@ const searchQuery = ref('')
 
     </section>
   </main>
+  <WeatherHero
+      class="hero-full-width"
+      name="moderateRain"
+      date="Monday, 20 December 2021"
+      location="Bangsar South, KL"
+      :temperature="24"
+      weather="Moderate Rain"
+      updateTime="6:00 PM"
+      />
 </template>
 
 <style>
@@ -82,4 +92,5 @@ const searchQuery = ref('')
   gap: 12px;
   flex-wrap: wrap;
 }
+
 </style>
