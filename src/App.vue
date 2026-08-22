@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import AppButton from './components/atoms/AppButton.vue'
 import AppIcon from './components/atoms/AppIcon.vue';
+import AppIconButton from './components/atoms/AppIconButton.vue';
+import AppInput from './components/atoms/AppInput.vue';
+
+const email = ref('')
 </script>
 
 <template>
@@ -21,6 +26,15 @@ import AppIcon from './components/atoms/AppIcon.vue';
       </AppButton>
 
       <AppIcon name="delete" />
+      <AppIconButton icon="search" />
+
+     <AppInput
+        v-model="email"
+        type="email"
+        placeholder="Enter your email"
+      />
+
+      <p>Current value: {{ email }}</p>
     </section>
   </main>
 </template>
