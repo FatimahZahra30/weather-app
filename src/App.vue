@@ -7,6 +7,10 @@ import AppInput from './components/atoms/AppInput.vue'
 import SearchBar from './components/molecules/SearchBar.vue'
 import LocationWeatherCard from './components/molecules/LocationWeatherCard.vue'
 
+import dayBackground from './assets/weather/day-background.jpg'
+import nightBackground from './assets/weather/night-background.jpg'
+import nightOverlay from './assets/weather/night-overlay.jpg'
+
 const email = ref('')
 const searchQuery = ref('')
 </script>
@@ -48,6 +52,7 @@ const searchQuery = ref('')
         :temperature="28"
         :high="31"
         :low="24"
+        :background-image="dayBackground"
       />
     </section>
   </main>
