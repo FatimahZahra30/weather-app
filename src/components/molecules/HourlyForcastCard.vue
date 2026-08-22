@@ -53,7 +53,7 @@ withDefaults(
   width: 100%;
   min-width: 0;
   padding: 12px 8px;
-  border-radius: 12px;
+  border-radius: 4px;
   background: #F5F5F5;
   text-align: center;
 }
@@ -71,14 +71,14 @@ withDefaults(
 
 .hourly-forecast-card__temperature {
   margin-top: 4px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #201C1C;
 }
 
 .hourly-forecast-card__time {
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 12.5px;
   color: #494343;
 }
 </style>
