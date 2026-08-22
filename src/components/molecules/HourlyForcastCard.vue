@@ -59,8 +59,8 @@ withDefaults(
 }
 
 .hourly-forecast-card__icon {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   object-fit: contain;
 }
 

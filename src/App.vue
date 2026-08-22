@@ -9,6 +9,7 @@ import LocationWeatherCard from './components/molecules/LocationWeatherCard.vue'
 
 import dayBackground from './assets/weather/day-background.jpg'
 import HourlyForcastCard from './components/molecules/HourlyForcastCard.vue'
+import WeeklyForcastItem from './components/molecules/WeeklyForcastItem.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -57,8 +58,16 @@ const searchQuery = ref('')
       <HourlyForcastCard
         name="sunny"
         :temperature="29"
-        time="2 PM"
+        time="2:00 PM"
       />
+
+      <WeeklyForcastItem
+      name="thunderstorm"
+      day="Tuesday"
+      weather="Thunderstorm"
+      :temperature="19"
+      />
+
     </section>
   </main>
 </template>

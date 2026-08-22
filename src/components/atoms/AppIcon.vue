@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   ArrowLeft,
-  ArrowRight,
   ChevronRight,
   CircleUserRound,
   Edit,
@@ -11,9 +10,10 @@ import {
   Trash2,
 } from 'lucide-vue-next'
 
+import caretRight from '../../assets/icons/right-arrows.png'
+
 const icons = {
   arrowLeft: ArrowLeft,
-  arrowRight: ArrowRight,
   chevronRight: ChevronRight,
   profile: CircleUserRound,
   edit: Edit,
@@ -23,7 +23,7 @@ const icons = {
   delete: Trash2,
 }
 
-type IconName = keyof typeof icons
+type IconName = keyof typeof icons | 'caretRight'
 
 withDefaults(
   defineProps<{
@@ -39,7 +39,19 @@ withDefaults(
 </script>
 
 <template>
+  <!-- Caret PNG -->
+  <img
+    v-if="name === 'caretRight'"
+    :src="caretRight"
+    :width="size"
+    :height="size"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <!-- Lucide icons -->
   <component
+    v-else
     :is="icons[name]"
     :size="size"
     :stroke-width="strokeWidth"

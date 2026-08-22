@@ -3,7 +3,7 @@ import AppIcon from './AppIcon.vue'
 
 const props = withDefaults(
   defineProps<{
-    icon: 'arrowLeft' | 'arrowRight' | 'chevronRight' | 'profile' | 'edit' | 'plus' | 'refresh' | 'search' | 'delete'
+    icon: 'arrowLeft' | 'caretRight' | 'chevronRight' | 'profile' | 'edit' | 'plus' | 'refresh' | 'search' | 'delete'
     size?: number
   }>(),
   {
