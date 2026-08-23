@@ -2,7 +2,7 @@
 import {
   ArrowLeft,
   ChevronRight,
-  CircleUserRound,
+  User,
   Edit,
   Plus,
   RotateCw,
@@ -15,7 +15,7 @@ import caretRight from '../../assets/icons/right-arrows.png'
 const icons = {
   arrowLeft: ArrowLeft,
   chevronRight: ChevronRight,
-  profile: CircleUserRound,
+  profile: User,
   edit: Edit,
   plus: Plus,
   refresh: RotateCw,

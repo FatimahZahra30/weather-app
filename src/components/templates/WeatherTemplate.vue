@@ -1,30 +1,36 @@
 <script setup lang="ts">
 import SearchBar from '../molecules/SearchBar.vue'
 import LocationWeatherCard from '../molecules/LocationWeatherCard.vue'
-import HourlyForcast from '../organisms/HourlyForcast.vue'
-import WeeklyForcast from '../organisms/WeeklyForcast.vue'
-import { ref } from 'vue'
 
-const searchQuery = ref('')
+defineProps<{
+  location: string
+  time: string
+  description: string
+  temperature: number
+  high: number
+  low: number
+}>()
+
+const searchQuery = defineModel<string>('searchQuery', {
+  default: '',
+})
 </script>
 
 <template>
   <main class="weather-template">
 
-    <!-- Search -->
     <section class="weather-template__search">
-      <SearchBar v-model="searchQuery"/>
+      <SearchBar v-model="searchQuery" />
     </section>
 
-    <!-- Current Weather -->
     <section class="weather-template__current">
       <LocationWeatherCard
-        location="Kuala Lumpur"
-        time="10:30 AM"
-        description="Partly cloudy"
-        :temperature="28"
-        :high="31"
-        :low="24"
+        :location="location"
+        :time="time"
+        :description="description"
+        :temperature="temperature"
+        :high="high"
+        :low="low"
       />
     </section>
 
@@ -48,12 +54,14 @@ const searchQuery = ref('')
 
 .weather-template__search {
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Current Weather */
 
 .weather-template__current {
   width: 100%;
+  box-sizing: border-box;
 }
 
 </style>

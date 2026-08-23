@@ -64,6 +64,7 @@ const emit = defineEmits<{
 
 .app-input::placeholder {
   color: #8C939D;
+  font-size: 16px;
 }
 
 .app-input:focus {

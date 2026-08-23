@@ -15,7 +15,7 @@ const emit = defineEmits<{
   <div class="search-bar">
     <AppIcon
       name="search"
-      :size="20"
+      :size="18"
     />
 
     <AppInput
@@ -32,8 +32,13 @@ const emit = defineEmits<{
   display: flex;
   align-items: center;
   gap: 8px;
+
   width: 100%;
-  padding: 0px 12px;
+  height: 38px;
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
   border-radius: 12px;
   background: #F5F5F5;
   color: #8C939D;
@@ -41,8 +46,13 @@ const emit = defineEmits<{
 
 .search-bar :deep(.app-input) {
   flex: 1;
-  min-height: 44px;
-  padding: 8px 4px;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  padding: 4px;
+
   border: none;
   box-shadow: none;
 }

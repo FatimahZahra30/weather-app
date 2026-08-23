@@ -1,0 +1,69 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import WeatherTemplate from '../components/templates/WeatherTemplate.vue'
+import AppIconButton from '../components/atoms/AppIconButton.vue';
+
+const searchQuery = ref('')
+
+const weather = {
+  location: 'Kuala Lumpur',
+  time: '10:30 AM',
+  description: 'Partly cloudy',
+  temperature: 28,
+  high: 31,
+  low: 24,
+}
+</script>
+
+<template class="weather-pgae">
+  <section class="header">
+    <h3>
+      Weather
+    </h3>
+    <AppIconButton
+    icon="profile"
+    :size="26"
+      />
+  </section>
+  <WeatherTemplate
+    v-model:search-query="searchQuery"
+    :location="weather.location"
+    :time="weather.time"
+    :description="weather.description"
+    :temperature="weather.temperature"
+    :high="weather.high"
+    :low="weather.low"
+  />
+</template>
+
+<style scoped>
+:global(body) {
+  background-color: #ffffff;
+}
+
+.weather-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: calc(24px + env(safe-area-inset-top)) 24px 24px;
+
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  margin-bottom: 12px;
+
+  color: #201C1C;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 37px;
+  font-weight: 700;
+}
+</style>
