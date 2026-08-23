@@ -2,6 +2,13 @@
 import AppIconButton from '../components/atoms/AppIconButton.vue'
 import ProfileForm from '../components/organisms/ProfileForm.vue'
 import profilePicture from '../assets/profile/profile-picture.png'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToWeather = () => {
+  router.push('/')
+}
 
 const handleSave = (profile: {
   name: string
@@ -21,6 +28,7 @@ const handleSave = (profile: {
       <AppIconButton
         icon="arrowLeft"
         :size="20"
+        @click="goToWeather"
       />
 
       <p>

@@ -1,6 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import AppIconButton from '../components/atoms/AppIconButton.vue'
 import WeatherDetailTemplate from '../components/templates/WeatherDetailTemplate.vue'
+
+const router = useRouter()
+
+const goToWeather = () => {
+  router.push('/')
+}
+
 </script>
 
 <template>
@@ -11,6 +19,7 @@ import WeatherDetailTemplate from '../components/templates/WeatherDetailTemplate
       <AppIconButton
         icon="arrowLeft"
         :size="20"
+        @click="goToWeather"
       />
 
       <AppIconButton

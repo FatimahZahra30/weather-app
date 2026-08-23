@@ -2,6 +2,13 @@
 import { ref } from 'vue'
 import WeatherTemplate from '../components/templates/WeatherTemplate.vue'
 import AppIconButton from '../components/atoms/AppIconButton.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+const goToProfile = () => {
+  router.push('/profile')
+}
 
 const searchQuery = ref('')
 
@@ -24,6 +31,7 @@ const weather = {
     <AppIconButton
     icon="profile"
     :size="26"
+    @click="goToProfile"
       />
   </section>
   <WeatherTemplate
