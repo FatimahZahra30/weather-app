@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import AppButton from '../atoms/AppButton.vue'
 import AppInput from '../atoms/AppInput.vue'
+import USFlag from '../../assets/icons/US-flag.png'
 
 const name = ref('Fatimah Zahra')
 const email = ref('fatimah@example.com')
@@ -161,9 +162,11 @@ const formatPhone = (event: Event) => {
         class="phone-input"
         :class="{ 'phone-input--error': phoneError }"
     >
-        <span class="phone-input__flag">
-        🇺🇸
-        </span>
+        <img
+          :src="USFlag"
+          alt="Phone Input Flag"
+          class="phone-input__flag"
+        />
 
         <input
         id="profile-phone"
@@ -272,18 +275,17 @@ const formatPhone = (event: Event) => {
 /* Flag */
 
 .phone-input__flag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 20px;
+  height: 14px;
 
-  width: 36px;
-  height: 100%;
-  padding-top: 15px;
-
+  object-fit: cover;
   flex-shrink: 0;
-  padding-left: 6px;
 
-  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 8px;
+  margin-top: 15px;
+
+  border-radius: 2px;
 }
 
 /* Number */

@@ -102,7 +102,7 @@ const handleSave = (profile: {
 
   text-align: center;
 
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
 
   color: #201C1C;
