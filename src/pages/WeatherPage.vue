@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import WeatherTemplate from '../components/templates/WeatherTemplate.vue'
 import AppIconButton from '../components/atoms/AppIconButton.vue';
 import { useRouter } from 'vue-router';
+import { onMounted } from 'vue'
+import { getWeather } from '../api/weather'
 
 const router = useRouter()
 
@@ -20,6 +22,16 @@ const weather = {
   high: 31,
   low: 24,
 }
+
+onMounted(async () => {
+  try {
+    const data = await getWeather('Kuala Lumpur')
+
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
+})
 </script>
 
 <template class="weather-pgae">
