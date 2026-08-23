@@ -99,7 +99,7 @@ const handleSave = (profile: {
 
   display: flex;
   align-items: center;
-  
+
   width: 100%;
   padding: 0 13px;
 
@@ -108,21 +108,20 @@ const handleSave = (profile: {
   color: #201C1C;
 }
 
-.header :deep(.app-icon-button) {
-  flex-shrink: 0;
-}
-
 .header p {
-  flex: 1;
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
 
   margin: 0;
-
-  text-align: center;
 
   font-size: 22px;
   font-weight: 700;
 
   color: #201C1C;
+
+  white-space: nowrap;
 }
 
 .header__spacer {
