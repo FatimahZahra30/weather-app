@@ -1,16 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
 import AppButton from '../atoms/AppButton.vue'
 import AppInput from '../atoms/AppInput.vue'
 import USFlag from '../../assets/icons/US-flag.png'
 
-const name = ref('Fatimah Zahra')
-const email = ref('fatimah@example.com')
-const phone = ref('012 - 345 - 6789')
+interface Profile {
+  name: string
+  email: string
+  phone: string
+}
+
+const props = defineProps<{
+  profile: Profile
+  isEditing: boolean
+}>()
+
+const name = ref(props.profile.name)
+const email = ref(props.profile.email)
+const phone = ref(props.profile.phone)
 
 const nameError = ref('')
 const emailError = ref('')
 const phoneError = ref('')
+
+watch(
+  () => props.profile,
+  (newProfile) => {
+    name.value = newProfile.name
+    email.value = newProfile.email
+    phone.value = newProfile.phone
+  },
+  { deep: true },
+)
+
+const emit = defineEmits<{
+  edit: []
+  save: [
+    profile: {
+      name: string
+      email: string
+      phone: string
+    },
+  ]
+}>()
+
+/* =========================
+   Validation
+   ========================= */
 
 const validateForm = () => {
   nameError.value = ''
@@ -52,13 +89,9 @@ const validateForm = () => {
   return isValid
 }
 
-const emit = defineEmits<{
-  save: [profile: {
-    name: string
-    email: string
-    phone: string
-  }]
-}>()
+/* =========================
+   Save
+   ========================= */
 
 const handleSave = () => {
   if (!validateForm()) {
@@ -71,6 +104,10 @@ const handleSave = () => {
     phone: phone.value,
   })
 }
+
+/* =========================
+   Phone Formatting
+   ========================= */
 
 const formatPhone = (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -97,34 +134,48 @@ const formatPhone = (event: Event) => {
     @submit.prevent="handleSave"
   >
 
-    <!-- Name -->
+    <!-- =========================
+         Name
+         ========================= -->
+
     <div class="profile-form__field">
-    <label
+
+      <label
         class="profile-form__label"
         for="profile-name"
-    >
+      >
         Full Name
-    </label>
+      </label>
 
-    <AppInput
+      <AppInput
         id="profile-name"
         v-model="name"
         type="text"
         placeholder=""
         class="profile-form__input"
-        :class="{ 'profile-form__input--error': nameError }"
-        />
+        :disabled="!isEditing"
+        :class="{
+          'profile-form__input--error': nameError,
+          'profile-form__input--editing': isEditing,
+        }"
+      />
 
-        <p
-            v-if="nameError"
-            class="profile-form__error"
-        >
-            {{ nameError }}
-        </p>
-        </div>
+      <p
+        v-if="nameError"
+        class="profile-form__error"
+      >
+        {{ nameError }}
+      </p>
 
-    <!-- Email -->
+    </div>
+
+
+    <!-- =========================
+         Email
+         ========================= -->
+
     <div class="profile-form__field">
+
       <label
         class="profile-form__label"
         for="profile-email"
@@ -138,30 +189,44 @@ const formatPhone = (event: Event) => {
         type="email"
         placeholder="Enter your email"
         class="profile-form__input"
-        :class="{ 'profile-form__input--error': emailError }"
-        />
+        :disabled="!isEditing"
+        :class="{
+          'profile-form__input--error': emailError,
+          'profile-form__input--editing': isEditing,
+        }"
+      />
 
-        <p
-            v-if="emailError"
-            class="profile-form__error"
-        >
-            {{ emailError }}
-        </p>
-        </div>
+      <p
+        v-if="emailError"
+        class="profile-form__error"
+      >
+        {{ emailError }}
+      </p>
 
-    <!-- Phone Number -->
+    </div>
+
+
+    <!-- =========================
+         Phone Number
+         ========================= -->
+
     <div class="profile-form__field">
-    <label
+
+      <label
         class="profile-form__label"
         for="profile-phone"
-    >
+      >
         Phone Number
-    </label>
+      </label>
 
-    <div
+      <div
         class="phone-input"
-        :class="{ 'phone-input--error': phoneError }"
-    >
+        :class="{
+          'phone-input--error': phoneError,
+          'profile-form__input--editing': isEditing,
+        }"
+      >
+
         <img
           :src="USFlag"
           alt="Phone Input Flag"
@@ -169,38 +234,58 @@ const formatPhone = (event: Event) => {
         />
 
         <input
-        id="profile-phone"
-        v-model="phone"
-        class="phone-input__field"
-        type="tel"
-        inputmode="numeric"
-        maxlength="16"
-        placeholder="123 - 456 - 7890"
-        @input="formatPhone"
+          id="profile-phone"
+          v-model="phone"
+          class="phone-input__field"
+          type="tel"
+          inputmode="numeric"
+          maxlength="16"
+          placeholder="123 - 456 - 7890"
+          :disabled="!isEditing"
+          @input="formatPhone"
         />
-    </div>
 
-    <!-- Error OUTSIDE phone-input -->
-    <p
+      </div>
+
+      <p
         v-if="phoneError"
         class="profile-form__error"
-    >
+      >
         {{ phoneError }}
-    </p>
+      </p>
+
     </div>
 
-    <!-- Save -->
+
+    <!-- =========================
+         Edit / Submit Button
+         ========================= -->
+
     <AppButton
+      v-if="!isEditing"
+      class="profile-form__save"
+      type="button"
+      @click="emit('edit')"
+    >
+      EDIT
+    </AppButton>
+
+    <AppButton
+      v-else
       class="profile-form__save"
       type="submit"
     >
-      EDIT
+      SUBMIT
     </AppButton>
 
   </form>
 </template>
 
 <style scoped>
+/* =========================
+   Form
+   ========================= */
+
 .profile-form {
   display: flex;
   flex-direction: column;
@@ -210,6 +295,7 @@ const formatPhone = (event: Event) => {
 
   box-sizing: border-box;
 }
+
 
 /* =========================
    Form Field
@@ -223,8 +309,14 @@ const formatPhone = (event: Event) => {
   margin-bottom: 15px;
 }
 
+
+/* =========================
+   Label
+   ========================= */
+
 .profile-form__label {
   position: absolute;
+
   top: 3px;
   left: 12px;
 
@@ -240,6 +332,11 @@ const formatPhone = (event: Event) => {
   pointer-events: none;
 }
 
+
+/* =========================
+   Text / Email Input
+   ========================= */
+
 .profile-form__input {
   width: 100%;
   height: 55px;
@@ -250,6 +347,8 @@ const formatPhone = (event: Event) => {
 
   font-weight: 500;
 }
+
+
 /* =========================
    Phone Input
    ========================= */
@@ -265,20 +364,23 @@ const formatPhone = (event: Event) => {
 
   border: 1px solid #F5F5F5;
   border-radius: 10px;
-  
 
   background: #F5F5F5;
 
   overflow: hidden;
 }
 
-/* Flag */
+
+/* =========================
+   Flag
+   ========================= */
 
 .phone-input__flag {
   width: 20px;
   height: 14px;
 
   object-fit: cover;
+
   flex-shrink: 0;
 
   margin-left: 10px;
@@ -288,7 +390,10 @@ const formatPhone = (event: Event) => {
   border-radius: 2px;
 }
 
-/* Number */
+
+/* =========================
+   Phone Number
+   ========================= */
 
 .phone-input__field {
   flex: 1;
@@ -299,6 +404,7 @@ const formatPhone = (event: Event) => {
   min-width: 0;
 
   padding: 15px 12px 0 0;
+
   border: none;
   outline: none;
 
@@ -317,15 +423,39 @@ const formatPhone = (event: Event) => {
   color: #999;
 }
 
+.profile-form__input--editing {
+  background-color: #FFFFFF !important;
+  border-color: #EDEDED;
+}
+
+
 /* =========================
-   Save Button
+   Disabled Inputs
+   ========================= */
+
+.profile-form__input:disabled,
+.phone-input__field:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+
+/* =========================
+   Edit / Submit Button
    ========================= */
 
 .profile-form__save {
   width: 100%;
+
   margin-top: auto;
+
   background-color: #2E3A5A;
 }
+
+
+/* =========================
+   Errors
+   ========================= */
 
 .profile-form__input--error {
   border-color: #D9534F !important;
@@ -335,6 +465,7 @@ const formatPhone = (event: Event) => {
   margin: 5px 0 0;
 
   font-size: 12px;
+
   color: #D9534F;
 }
 

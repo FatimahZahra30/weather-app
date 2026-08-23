@@ -1,28 +1,86 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
 import AppIconButton from '../components/atoms/AppIconButton.vue'
 import ProfileForm from '../components/organisms/ProfileForm.vue'
 import profilePicture from '../assets/profile/profile-picture.png'
-import { useRouter } from 'vue-router'
+
+interface Profile {
+  name: string
+  email: string
+  phone: string
+}
 
 const router = useRouter()
+
+/* =========================
+   Profile State
+   ========================= */
+
+const isEditing = ref(false)
+
+const profile = ref<Profile>({
+  name: 'Jane Doe',
+  email: 'jane@gmail.com',
+  phone: '123 - 456 - 7890',
+})
+
+/* =========================
+   Load Saved Profile
+   ========================= */
+
+onMounted(() => {
+  const savedProfile = localStorage.getItem('profile')
+
+  if (savedProfile) {
+    try {
+      profile.value = JSON.parse(savedProfile)
+    } catch {
+      console.error('Failed to load saved profile.')
+    }
+  }
+})
+
+/* =========================
+   Navigation
+   ========================= */
 
 const goToWeather = () => {
   router.push('/')
 }
 
-const handleSave = (profile: {
-  name: string
-  email: string
-  phone: string
-}) => {
-  console.log('Profile saved:', profile)
+/* =========================
+   Edit Profile
+   ========================= */
+
+const startEditing = () => {
+  isEditing.value = true
+}
+
+/* =========================
+   Save Profile
+   ========================= */
+
+const handleSave = (updatedProfile: Profile) => {
+  profile.value = updatedProfile
+
+  localStorage.setItem(
+    'profile',
+    JSON.stringify(updatedProfile),
+  )
+
+  isEditing.value = false
 }
 </script>
 
 <template>
   <main class="profile-page">
 
-    <!-- Header -->
+    <!-- =========================
+         Header
+         ========================= -->
+
     <section class="header">
 
       <AppIconButton
@@ -35,11 +93,16 @@ const handleSave = (profile: {
         Edit Profile
       </p>
 
+      <!-- Keeps title centered -->
       <div class="header__spacer"></div>
 
     </section>
 
-    <!-- Profile Picture -->
+
+    <!-- =========================
+         Profile Picture
+         ========================= -->
+
     <section class="profile-header">
 
       <div class="profile-header__background">
@@ -54,28 +117,47 @@ const handleSave = (profile: {
 
     </section>
 
-    <!-- Profile Detail -->
-     <section class="profile-detail">
-        <p>
-            Fatimah Zahra
-        </p>
 
-        <p>
-            fatimah@example.con | +01 012 345 6789
-        </p>
-     </section>
+    <!-- =========================
+         Profile Details
+         ========================= -->
 
-    <!-- Profile Form -->
+    <section class="profile-detail">
+
+      <p class="profile-detail__name">
+        {{ profile.name }}
+      </p>
+
+      <p class="profile-detail__contact">
+        {{ profile.email }} | +01 {{ profile.phone.replace(/\s*-\s*/g, ' ') }}
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         Profile Form
+         ========================= -->
+
     <section class="profile-page__form">
+
       <ProfileForm
+        :profile="profile"
+        :is-editing="isEditing"
+        @edit="startEditing"
         @save="handleSave"
       />
+
     </section>
 
   </main>
 </template>
 
 <style scoped>
+/* =========================
+   Page
+   ========================= */
+
 .profile-page {
   width: 100%;
   min-height: 100vh;
@@ -85,12 +167,14 @@ const handleSave = (profile: {
   color: #201C1C;
 }
 
+
 /* =========================
    Header
    ========================= */
 
 .header {
   position: absolute;
+
   z-index: 10;
 
   top: 24px;
@@ -101,6 +185,7 @@ const handleSave = (profile: {
   align-items: center;
 
   width: 100%;
+
   padding: 0 13px;
 
   box-sizing: border-box;
@@ -108,26 +193,30 @@ const handleSave = (profile: {
   color: #201C1C;
 }
 
-.header p {
-  position: absolute;
+.header :deep(.app-icon-button) {
+  flex-shrink: 0;
+}
 
-  left: 50%;
-  transform: translateX(-50%);
+.header p {
+  flex: 1;
 
   margin: 0;
+
+  text-align: center;
 
   font-size: 22px;
   font-weight: 700;
 
   color: #201C1C;
-
-  white-space: nowrap;
 }
 
 .header__spacer {
   width: 20px;
   height: 20px;
+
+  flex-shrink: 0;
 }
+
 
 /* =========================
    Profile Header
@@ -142,7 +231,9 @@ const handleSave = (profile: {
   overflow: hidden;
 }
 
-/* Curved blue background */
+
+/* Curved background */
+
 .profile-header__background {
   position: absolute;
 
@@ -157,13 +248,16 @@ const handleSave = (profile: {
   border-radius: 0 0 45% 45%;
 }
 
+
 /* Profile picture */
+
 .profile-header__image {
   position: absolute;
 
   z-index: 2;
 
   left: 50%;
+
   margin-top: 110px;
 
   transform: translateX(-50%);
@@ -174,8 +268,41 @@ const handleSave = (profile: {
   border-radius: 50%;
 
   object-fit: cover;
-
 }
+
+
+/* =========================
+   Profile Details
+   ========================= */
+
+.profile-detail {
+  width: 100%;
+
+  margin-top: -10px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.profile-detail__name {
+  margin: 0 0 2px;
+
+  font-size: 15px;
+  font-weight: 400;
+
+  color: #201C1C;
+}
+
+.profile-detail__contact {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 400;
+
+  color: #201C1C;
+}
+
 
 /* =========================
    Profile Form
@@ -187,18 +314,8 @@ const handleSave = (profile: {
 
   margin: 0 auto;
 
-  box-sizing: border-box;
   padding: 24px;
+
+  box-sizing: border-box;
 }
-
-/* =========================
-   Profile Detail
-   ========================= */
-.profile-detail {
-    font-size: 14px;
-    font-weight: 450;
-
-    margin-top: -10px;
-}
-
 </style>
