@@ -107,7 +107,7 @@ withDefaults(
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
-  margin-top: 68px;
+  margin-top: 34px;
 }
 
 /* Date */
@@ -121,9 +121,9 @@ withDefaults(
 
 /* Weather icon */
 .weather-hero__icon {
-  width: 72px;
-  height: 72px;
-  margin-top: 21px;
+  width: 85px;
+  height: 85px;
+  margin-top: 25px;
   object-fit: contain;
 }
 
@@ -133,7 +133,7 @@ withDefaults(
   font-size: 20px;
   font-weight: 400;
   line-height: 1;
-  margin-top: 16px;
+  margin-top: 19px;
 }
 
 /* Weather description */
@@ -142,6 +142,7 @@ withDefaults(
   font-size: 20px;
   font-weight: 600;
   line-height: 1.2;
+  margin-top: 20px;
 }
 
 /* Bottom update section */
@@ -149,7 +150,7 @@ withDefaults(
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 35px;
+  margin-top: 30px;
 }
 
 .weather-hero__updated {
@@ -157,7 +158,6 @@ withDefaults(
   font-size: 14px;
   font-weight: 400;
   line-height: 1;
-  opacity: 0.8;
 }
 
 .update-button {

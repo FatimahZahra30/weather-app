@@ -16,7 +16,8 @@ const weather = {
 </script>
 
 <template class="weather-pgae">
-  <section class="header">
+  <main class="weather-page">
+    <section class="header">
     <h3>
       Weather
     </h3>
@@ -34,6 +35,7 @@ const weather = {
     :high="weather.high"
     :low="weather.low"
   />
+  </main>
 </template>
 
 <style scoped>
@@ -45,8 +47,7 @@ const weather = {
   width: 100%;
   min-height: 100vh;
 
-  padding: calc(24px + env(safe-area-inset-top)) 24px 24px;
-
+  padding: 24px;
   box-sizing: border-box;
 }
 

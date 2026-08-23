@@ -56,8 +56,8 @@ import WeeklyForcast from '../organisms/WeeklyForcast.vue'
 .weather-details-template__section {
   width: 100%;
   min-width: 0;
+  padding: 0 20px;
 
-  padding: 0 24px;
 
   box-sizing: border-box;
 }
