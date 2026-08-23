@@ -44,25 +44,29 @@ const emit = defineEmits<{
 <style scoped>
 .app-input {
   width: 100%;
-  min-height: 52px;
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #111827;
-  font: inherit;
+  height: 44px;
+
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #D2DFFF;
+  border-radius: 10px;
+
+  background: #F5F5F5;
+
+  font-family: inherit;
+  font-size: 14px;
+  color: #201C1C;
+
   outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .app-input::placeholder {
-  color: #9ca3af;
+  color: #8C939D;
 }
 
 .app-input:focus {
-  border-color: #2563eb;
   box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
 }
 

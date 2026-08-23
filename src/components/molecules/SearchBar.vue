@@ -33,10 +33,10 @@ const emit = defineEmits<{
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 4px 12px;
-  border: 1px solid #d1d5db;
+  padding: 0px 12px;
   border-radius: 12px;
-  background: #ffffff;
+  background: #F5F5F5;
+  color: #8C939D;
 }
 
 .search-bar :deep(.app-input) {

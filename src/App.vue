@@ -13,6 +13,7 @@ import WeeklyForcastItem from './components/molecules/WeeklyForcastItem.vue'
 import WeatherHero from './components/organisms/WeatherHero.vue'
 import HourlyForcast from './components/organisms/HourlyForcast.vue'
 import WeeklyForcast from './components/organisms/WeeklyForcast.vue'
+import ProfileForm from './components/organisms/ProfileForm.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -69,6 +70,10 @@ const searchQuery = ref('')
       day="Tuesday"
       weather="Thunderstorms"
       :temperature="19"
+      />
+
+      <ProfileForm
+        @save="console.log"
       />
 
     </section>
