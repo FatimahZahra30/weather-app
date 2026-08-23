@@ -15,6 +15,7 @@ import HourlyForcast from './components/organisms/HourlyForcast.vue'
 import WeeklyForcast from './components/organisms/WeeklyForcast.vue'
 import ProfileForm from './components/organisms/ProfileForm.vue'
 import WeatherTemplate from './components/templates/WeatherTemplate.vue'
+import WeatherDetailTemplate from './components/templates/WeatherDetailTemplate.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -106,6 +107,8 @@ const searchQuery = ref('')
       weather="Moderate Rain"
       updateTime="6:00 PM"
     />
+
+    <WeatherDetailTemplate />
 
 </template>
 

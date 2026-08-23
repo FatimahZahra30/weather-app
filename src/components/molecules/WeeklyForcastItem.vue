@@ -72,9 +72,14 @@ withDefaults(
 .weekly-forcast-item {
   display: flex;
   align-items: center;
+
   width: 100%;
   min-width: 0;
+
   padding: 13px 13px;
+
+  box-sizing: border-box;
+
   border-radius: 12px;
   background: #D2DFFF;
 }
