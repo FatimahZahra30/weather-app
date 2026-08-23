@@ -87,12 +87,21 @@ const handleSave = (profile: {
 
   top: 24px;
   left: 0;
-  right: 24px;
+  right: 0;
 
   display: flex;
   align-items: center;
+  
+  width: 100%;
+  padding: 0 13px;
+
+  box-sizing: border-box;
 
   color: #201C1C;
+}
+
+.header :deep(.app-icon-button) {
+  flex-shrink: 0;
 }
 
 .header p {
