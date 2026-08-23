@@ -1,102 +1,107 @@
 <script setup lang="ts">
-import cloudy from '../../assets/weather-icons/cloudy.png'
-import moderateRain from '../../assets/weather-icons/moderate-rain.png'
-import rainy from '../../assets/weather-icons/rainy.png'
-import sunny from '../../assets/weather-icons/sunny.png'
-import thunderstorm from '../../assets/weather-icons/thunderstorm.png'
+import HourlyForcastCard from '../molecules/HourlyForcastCard.vue'
 
-const icons = {
-  cloudy,
-  moderateRain,
-  rainy,
-  sunny,
-  thunderstorm,
-}
-
-type IconName = keyof typeof icons
-
-withDefaults(
-  defineProps<{
-    name: IconName
-    temperature?: number
-    time: string
-  }>(),
+const hourlyForecast = [
   {
-    temperature: 0,
+    name: 'sunny' as const,
+    temperature: 29,
+    time: '2 PM',
   },
-)
+  {
+    name: 'cloudy' as const,
+    temperature: 28,
+    time: '3 PM',
+  },
+  {
+    name: 'moderateRain' as const,
+    temperature: 27,
+    time: '4 PM',
+  },
+  {
+    name: 'thunderstorm' as const,
+    temperature: 26,
+    time: '5 PM',
+  },
+  {
+    name: 'rainy' as const,
+    temperature: 25,
+    time: '6 PM',
+  },
+  {
+    name: 'cloudy' as const,
+    temperature: 25,
+    time: '7 PM',
+  },
+]
 </script>
 
 <template>
-  <article class="hourly-forecast-card">
+  <section class="hourly-forecast">
 
-    <!-- Weather icon -->
-    <img
-      class="hourly-forecast__icon"
-      :src="icons[name]"
-      alt=""
-    />
+    <h2 class="hourly-forecast__title">
+      Hourly Forecast
+    </h2>
 
-    <!-- Temperature -->
-    <p class="hourly-forecast__temperature">
-      {{ temperature }}°
-    </p>
+    <div class="hourly-forecast__scroll">
 
-    <!-- Time -->
-    <p class="hourly-forecast__time">
-      {{ time }}
-    </p>
+      <HourlyForcastCard
+        v-for="(forecast, index) in hourlyForecast"
+        :key="index"
+        :name="forecast.name"
+        :temperature="forecast.temperature"
+        :time="forecast.time"
+      />
 
-  </article>
+    </div>
+
+  </section>
 </template>
 
 <style scoped>
-.hourly-forecast-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  /* Exactly 1/4 of the visible area */
-  width: calc(25% - 6px);
-  min-width: calc(25% - 6px);
-
-  /* VERY IMPORTANT */
-  flex-shrink: 0;
-
-  padding: 12px 8px;
-
-  box-sizing: border-box;
-
-  border-radius: 12px;
-  background: #F5F5F5;
+.hourly-forecast {
+  width: 100%;
+  min-width: 0;
 }
 
-/* Weather icon */
-.hourly-forecast__icon {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
+.hourly-forecast__title {
+  margin: 0 0 4px;
 
-/* Temperature */
-.hourly-forecast__temperature {
-  margin: 8px 0 0;
-
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1;
 
   color: #201C1C;
 }
 
-/* Time */
-.hourly-forecast__time {
-  margin: 8px 0 0;
+.hourly-forecast__scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
 
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1;
+  width: 100%;
+  min-width: 0;
 
-  color: #201C1C;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+}
+
+.hourly-forecast__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * 4 cards + 3 gaps = 100%
+ *
+ * Available width:
+ * 100% - 24px of gaps
+ *
+ * Each card:
+ * (100% - 24px) / 4
+ */
+.hourly-forecast__scroll :deep(.hourly-forecast-card) {
+  flex: 0 0 calc((100% - 24px) / 4);
+  width: calc((100% - 24px) / 4);
+  min-width: calc((100% - 24px) / 4);
 }
 </style>

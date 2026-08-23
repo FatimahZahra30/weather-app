@@ -11,6 +11,7 @@ import dayBackground from './assets/weather/day-background.jpg'
 import HourlyForcastCard from './components/molecules/HourlyForcastCard.vue'
 import WeeklyForcastItem from './components/molecules/WeeklyForcastItem.vue'
 import WeatherHero from './components/organisms/WeatherHero.vue'
+import HourlyForcast from './components/organisms/HourlyForcast.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -65,7 +66,7 @@ const searchQuery = ref('')
       <WeeklyForcastItem
       name="thunderstorm"
       day="Tuesday"
-      weather="Thunderstorm"
+      weather="Thunderstorms"
       :temperature="19"
       />
 
@@ -76,46 +77,10 @@ const searchQuery = ref('')
 
       <h2>Hourly Forecast</h2>
 
-      <div class="hourly-forecast-scroll">
+    </section>
 
-        <HourlyForcastCard
-          name="sunny"
-          :temperature="29"
-          time="2:00 PM"
-        />
-
-        <HourlyForcastCard
-          name="cloudy"
-          :temperature="28"
-          time="3:00 PM"
-        />
-
-        <HourlyForcastCard
-          name="moderateRain"
-          :temperature="27"
-          time="4:00 PM"
-        />
-
-        <HourlyForcastCard
-          name="thunderstorm"
-          :temperature="26"
-          time="5:00 PM"
-        />
-
-        <HourlyForcastCard
-          name="rainy"
-          :temperature="25"
-          time="6:00 PM"
-        />
-
-        <HourlyForcastCard
-          name="cloudy"
-          :temperature="25"
-          time="7:00 PM"
-        />
-
-      </div>
-
+    <section class="hourly-section">
+      <HourlyForcast />
     </section>
     </main>
 
@@ -142,40 +107,10 @@ const searchQuery = ref('')
   flex-wrap: wrap;
 }
 
-/* Hourly forecast section */
+
 .hourly-section {
-  display: block !important;
+  display: block;
   width: 100%;
-}
-
-.hourly-section h2 {
-  margin: 0 0 12px;
-}
-
-/* Scroll container */
-.hourly-forecast-scroll {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
-
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  scrollbar-width: none;
-  box-sizing: border-box;
-}
-
-.hourly-forecast-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-/* Exactly 4 cards visible */
-.hourly-forecast-scroll > * {
-  flex: 0 0 calc((100% - 24px) / 4);
-  width: calc((100% - 24px) / 4);
-  min-width: 0;
-  box-sizing: border-box;
 }
 
 </style>

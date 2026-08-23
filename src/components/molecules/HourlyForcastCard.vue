@@ -50,12 +50,19 @@ withDefaults(
 
 <style scoped>
 .hourly-forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   width: 100%;
   min-width: 0;
+
   padding: 12px 8px;
+
+  box-sizing: border-box;
+
   border-radius: 4px;
   background: #F5F5F5;
-  text-align: center;
 }
 
 .hourly-forecast-card__icon {
