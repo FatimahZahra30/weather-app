@@ -191,7 +191,7 @@ const formatPhone = (event: Event) => {
       class="profile-form__save"
       type="submit"
     >
-      Save Changes
+      EDIT
     </AppButton>
 
   </form>
@@ -203,9 +203,8 @@ const formatPhone = (event: Event) => {
   flex-direction: column;
 
   width: 100%;
+  min-height: 360px;
 
-  /* Don't add horizontal padding here if
-     the playground already controls the spacing */
   box-sizing: border-box;
 }
 
@@ -322,8 +321,8 @@ const formatPhone = (event: Event) => {
 
 .profile-form__save {
   width: 100%;
-
-  margin-top: 6px;
+  margin-top: auto;
+  background-color: #2E3A5A;
 }
 
 .profile-form__input--error {
