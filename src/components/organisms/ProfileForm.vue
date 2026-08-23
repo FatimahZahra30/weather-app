@@ -261,11 +261,11 @@ const formatPhone = (event: Event) => {
 
   box-sizing: border-box;
 
-  border: 1px solid #D2DFFF;
+  border: 1px solid #F5F5F5;
   border-radius: 10px;
   
 
-  background: #F5F7FC;
+  background: #F5F5F5;
 
   overflow: hidden;
 }
