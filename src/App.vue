@@ -14,6 +14,7 @@ import WeatherHero from './components/organisms/WeatherHero.vue'
 import HourlyForcast from './components/organisms/HourlyForcast.vue'
 import WeeklyForcast from './components/organisms/WeeklyForcast.vue'
 import ProfileForm from './components/organisms/ProfileForm.vue'
+import WeatherTemplate from './components/templates/WeatherTemplate.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -92,6 +93,7 @@ const searchQuery = ref('')
     <section class="weekly-forecast">
       <WeeklyForcast />
     </section>
+    <WeatherTemplate />
     </main>
 
     <!-- Weather hero -->
@@ -104,6 +106,7 @@ const searchQuery = ref('')
       weather="Moderate Rain"
       updateTime="6:00 PM"
     />
+
 </template>
 
 <style>
@@ -121,6 +124,10 @@ const searchQuery = ref('')
 .hourly-section {
   display: block;
   width: 100%;
+}
+
+.hero-full-width {
+  margin-bottom: 20px;
 }
 
 .weekly-forecast {
