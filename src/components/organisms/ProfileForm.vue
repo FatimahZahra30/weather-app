@@ -5,7 +5,51 @@ import AppInput from '../atoms/AppInput.vue'
 
 const name = ref('Fatimah Zahra')
 const email = ref('fatimah@example.com')
-const phone = ref('012-345-6789')
+const phone = ref('012 - 345 - 6789')
+
+const nameError = ref('')
+const emailError = ref('')
+const phoneError = ref('')
+
+const validateForm = () => {
+  nameError.value = ''
+  emailError.value = ''
+  phoneError.value = ''
+
+  let isValid = true
+
+  // Name
+  if (!name.value.trim()) {
+    nameError.value = 'Name is required.'
+    isValid = false
+  }
+
+  // Email
+  if (!email.value.trim()) {
+    emailError.value = 'Email is required.'
+    isValid = false
+  } else {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email.value)) {
+      emailError.value = 'Please enter a valid email address.'
+      isValid = false
+    }
+  }
+
+  // Phone
+  const phoneDigits = phone.value.replace(/\D/g, '')
+
+  if (!phoneDigits) {
+    phoneError.value = 'Phone number is required.'
+    isValid = false
+  } else if (phoneDigits.length !== 10) {
+    phoneError.value = 'Please enter a valid 10-digit phone number.'
+    isValid = false
+  }
+
+  return isValid
+}
 
 const emit = defineEmits<{
   save: [profile: {
@@ -16,6 +60,10 @@ const emit = defineEmits<{
 }>()
 
 const handleSave = () => {
+  if (!validateForm()) {
+    return
+  }
+
   emit('save', {
     name: name.value,
     email: email.value,
@@ -33,9 +81,9 @@ const formatPhone = (event: Event) => {
   }
 
   if (value.length > 6) {
-    value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6)}`
+    value = `${value.slice(0, 3)} - ${value.slice(3, 6)} - ${value.slice(6)}`
   } else if (value.length > 3) {
-    value = `${value.slice(0, 3)}-${value.slice(3)}`
+    value = `${value.slice(0, 3)} - ${value.slice(3)}`
   }
 
   phone.value = value
@@ -50,21 +98,29 @@ const formatPhone = (event: Event) => {
 
     <!-- Name -->
     <div class="profile-form__field">
-      <label
+    <label
         class="profile-form__label"
         for="profile-name"
-      >
-        Name
-      </label>
+    >
+        Full Name
+    </label>
 
-      <AppInput
+    <AppInput
         id="profile-name"
         v-model="name"
         type="text"
-        placeholder="Enter your name"
+        placeholder=""
         class="profile-form__input"
-      />
-    </div>
+        :class="{ 'profile-form__input--error': nameError }"
+        />
+
+        <p
+            v-if="nameError"
+            class="profile-form__error"
+        >
+            {{ nameError }}
+        </p>
+        </div>
 
     <!-- Email -->
     <div class="profile-form__field">
@@ -81,36 +137,53 @@ const formatPhone = (event: Event) => {
         type="email"
         placeholder="Enter your email"
         class="profile-form__input"
-      />
-    </div>
+        :class="{ 'profile-form__input--error': emailError }"
+        />
+
+        <p
+            v-if="emailError"
+            class="profile-form__error"
+        >
+            {{ emailError }}
+        </p>
+        </div>
 
     <!-- Phone Number -->
     <div class="profile-form__field">
-      <label
+    <label
         class="profile-form__label"
         for="profile-phone"
-      >
+    >
         Phone Number
-      </label>
+    </label>
 
-      <div class="phone-input">
-
+    <div
+        class="phone-input"
+        :class="{ 'phone-input--error': phoneError }"
+    >
         <span class="phone-input__flag">
-          🇺🇸
+        🇺🇸
         </span>
 
         <input
-          id="profile-phone"
-          v-model="phone"
-          class="phone-input__field"
-          type="tel"
-          inputmode="numeric"
-          maxlength="12"
-          placeholder="123-456-7890"
-          @input="formatPhone"
+        id="profile-phone"
+        v-model="phone"
+        class="phone-input__field"
+        type="tel"
+        inputmode="numeric"
+        maxlength="16"
+        placeholder="123 - 456 - 7890"
+        @input="formatPhone"
         />
+    </div>
 
-      </div>
+    <!-- Error OUTSIDE phone-input -->
+    <p
+        v-if="phoneError"
+        class="profile-form__error"
+    >
+        {{ phoneError }}
+    </p>
     </div>
 
     <!-- Save -->
@@ -141,35 +214,40 @@ const formatPhone = (event: Event) => {
    ========================= */
 
 .profile-form__field {
-  display: flex;
-  flex-direction: column;
+  position: relative;
 
   width: 100%;
 
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
-
-/* Field title */
 
 .profile-form__label {
-  margin-bottom: 7px;
+  position: absolute;
+  top: 3px;
+  left: 12px;
 
-  font-size: 14px;
-  font-weight: 600;
+  z-index: 2;
 
-  color: #201C1C;
+  margin: 0;
+
+  font-size: 8px;
+  font-weight: 500;
+
+  color: #757575;
+
+  pointer-events: none;
 }
-
-/* =========================
-   App Input
-   ========================= */
 
 .profile-form__input {
   width: 100%;
-  height: 60px;
+  height: 55px;
+
+  box-sizing: border-box;
+
+  padding: 18px 12px 6px;
+
   font-weight: 500;
 }
-
 /* =========================
    Phone Input
    ========================= */
@@ -179,7 +257,7 @@ const formatPhone = (event: Event) => {
   align-items: center;
 
   width: 100%;
-  height: 60px;
+  height: 55px;
 
   box-sizing: border-box;
 
@@ -201,6 +279,7 @@ const formatPhone = (event: Event) => {
 
   width: 36px;
   height: 100%;
+  padding-top: 15px;
 
   flex-shrink: 0;
   padding-left: 6px;
@@ -218,7 +297,7 @@ const formatPhone = (event: Event) => {
 
   min-width: 0;
 
-  padding: 0 12px 0 0;
+  padding: 15px 12px 0 0;
   border: none;
   outline: none;
 
@@ -245,5 +324,20 @@ const formatPhone = (event: Event) => {
   width: 100%;
 
   margin-top: 6px;
+}
+
+.profile-form__input--error {
+  border-color: #D9534F !important;
+}
+
+.profile-form__error {
+  margin: 5px 0 0;
+
+  font-size: 12px;
+  color: #D9534F;
+}
+
+.phone-input--error {
+  border-color: #D9534F;
 }
 </style>
