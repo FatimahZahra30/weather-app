@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import WeatherPage from '../pages/WeatherPage.vue'
+import WeatherDetailPage from '../pages/WeatherDetailPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,11 +9,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/weather',
+      name: 'weather',
+      component: WeatherPage,
     },
     {
-      path: '/weather',
-      component: WeatherPage,
+      path: '/weather-details',
+      name: 'weather-details',
+      component: WeatherDetailPage,
     },
   ],
 })

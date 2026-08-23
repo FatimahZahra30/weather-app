@@ -66,8 +66,11 @@ const hourlyForecast = [
 .hourly-forecast__title {
   margin: 0 0 4px;
 
-  font-size: 20px;
-  font-weight: 600;
+  padding-top: 18px;
+  padding-bottom: 15px;
+  font-size: 21px;
+  font-weight: 550;
+  text-align: left;
 
   color: #201C1C;
 }
@@ -75,7 +78,7 @@ const hourlyForecast = [
 .hourly-forecast__scroll {
   display: flex;
   flex-wrap: nowrap;
-  gap: 8px;
+  gap: 10px;
 
   width: 100%;
   min-width: 0;
@@ -89,6 +92,7 @@ const hourlyForecast = [
 .hourly-forecast__scroll::-webkit-scrollbar {
   display: none;
 }
+
 
 /*
  * 4 cards + 3 gaps = 100%

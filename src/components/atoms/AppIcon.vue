@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  ArrowLeft,
+  ChevronLeft,
   ChevronRight,
   User,
   Edit,
@@ -13,7 +13,7 @@ import {
 import caretRight from '../../assets/icons/right-arrows.png'
 
 const icons = {
-  arrowLeft: ArrowLeft,
+  arrowLeft: ChevronLeft,
   chevronRight: ChevronRight,
   profile: User,
   edit: Edit,

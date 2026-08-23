@@ -59,8 +59,11 @@ const weeklyForecast = [
 .weekly-forecast__title {
   margin: 0 0 8px;
 
-  font-size: 20px;
-  font-weight: 600;
+  padding-top: 18px;
+  padding-bottom: 15px;
+  font-size: 21px;
+  font-weight: 550;
+  text-align: left;
 
   color: #201C1C;
 }
@@ -68,7 +71,7 @@ const weeklyForecast = [
 .weekly-forecast__list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 13px;
 
   width: 100%;
 }
