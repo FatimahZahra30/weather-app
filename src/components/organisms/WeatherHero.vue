@@ -53,7 +53,7 @@ withDefaults(
 
     <!-- Temperature -->
     <p class="weather-hero__temperature">
-      {{ temperature }}°
+      {{ temperature }}° C
     </p>
 
     <!-- Weather -->

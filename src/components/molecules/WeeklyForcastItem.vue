@@ -55,7 +55,7 @@ withDefaults(
     <!-- Temperature + caret -->
     <div class="weekly-forcast-right">
       <p class="weekly-forcast-temperature">
-        {{ temperature }}°
+        {{ temperature }}° C
       </p>
 
       <AppIconButton
@@ -133,7 +133,7 @@ withDefaults(
 
 .weekly-forcast-temperature {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 560;
   color: #201C1C;
 }
