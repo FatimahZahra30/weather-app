@@ -370,6 +370,9 @@ const formatPhone = (event: Event) => {
   overflow: hidden;
 }
 
+.phone-input:focus-within {
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
 
 /* =========================
    Flag
