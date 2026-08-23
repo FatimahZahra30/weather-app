@@ -12,6 +12,7 @@ import HourlyForcastCard from './components/molecules/HourlyForcastCard.vue'
 import WeeklyForcastItem from './components/molecules/WeeklyForcastItem.vue'
 import WeatherHero from './components/organisms/WeatherHero.vue'
 import HourlyForcast from './components/organisms/HourlyForcast.vue'
+import WeeklyForcast from './components/organisms/WeeklyForcast.vue'
 
 const email = ref('')
 const searchQuery = ref('')
@@ -82,6 +83,10 @@ const searchQuery = ref('')
     <section class="hourly-section">
       <HourlyForcast />
     </section>
+
+    <section class="weekly-forecast">
+      <WeeklyForcast />
+    </section>
     </main>
 
     <!-- Weather hero -->
@@ -113,4 +118,7 @@ const searchQuery = ref('')
   width: 100%;
 }
 
+.weekly-forecast {
+  padding-right: 13px;
+}
 </style>

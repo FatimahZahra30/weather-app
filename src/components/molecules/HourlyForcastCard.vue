@@ -78,7 +78,7 @@ withDefaults(
 
 .hourly-forecast-card__temperature {
   margin-top: 3px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #201C1C;
 }

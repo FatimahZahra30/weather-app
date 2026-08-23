@@ -61,7 +61,7 @@ withDefaults(
       <AppIconButton
         class="right-icon"
         icon="caretRight"
-        :size="13"
+        :size="12"
       />
     </div>
 
@@ -114,13 +114,13 @@ withDefaults(
 }
 
 .weekly-forcast__day {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 }
 
 .weekly-forcast__weather {
-  margin-top: 1.5px;
-  font-size: 14px;
+  margin-top: 0.5px;
+  font-size: 13px;
   font-weight: 400;
 }
 
@@ -133,7 +133,7 @@ withDefaults(
 
 .weekly-forcast-temperature {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 560;
   color: #201C1C;
 }
