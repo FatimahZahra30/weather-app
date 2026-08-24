@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import AppIconButton from '../components/atoms/AppIconButton.vue'
 import WeatherDetailTemplate from '../components/templates/WeatherDetailTemplate.vue'
-import { getWeather } from '../api/weather'
+import { getWeather, type DailyForecast, type ForecastItem } from '../api/weather'
 
 import {
   isLocationSaved,
@@ -61,6 +61,8 @@ const weather = ref<{
   temperature: number
   high: number
   low: number
+  hourly: ForecastItem[]
+  daily: DailyForecast[]
 }>({
   location: '',
   date: '',
@@ -70,6 +72,8 @@ const weather = ref<{
   temperature: 0,
   high: 0,
   low: 0,
+  hourly: [],
+  daily: [],
 })
 
 
@@ -303,6 +307,9 @@ onMounted(async () => {
           data.low,
         ),
 
+        hourly: data.hourly,
+        daily: data.daily,
+
     }
 
   } catch (error) {
@@ -395,6 +402,8 @@ onMounted(async () => {
       :temperature="weather.temperature"
       :high="weather.high"
       :low="weather.low"
+      :hourly="weather.hourly"
+      :daily="weather.daily"
     />
 
   </main>

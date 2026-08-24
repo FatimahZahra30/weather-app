@@ -3,6 +3,11 @@ import WeatherHero from '../organisms/WeatherHero.vue'
 import HourlyForcast from '../organisms/HourlyForcast.vue'
 import WeeklyForcast from '../organisms/WeeklyForcast.vue'
 
+import type {
+  ForecastItem,
+  DailyForecast,
+} from '../../api/weather'
+
 type WeatherIcon =
   | 'cloudy'
   | 'moderateRain'
@@ -19,6 +24,8 @@ defineProps<{
   temperature: number
   high: number
   low: number
+  hourly: ForecastItem[]
+  daily: DailyForecast[]
 }>()
 </script>
 
@@ -39,17 +46,19 @@ defineProps<{
 
     </section>
 
-
     <section class="weather-details-template__section">
 
-      <HourlyForcast />
+      <HourlyForcast
+        :hourly="hourly"
+      />
 
     </section>
 
-
     <section class="weather-details-template__section">
 
-      <WeeklyForcast />
+      <WeeklyForcast
+        :daily="daily"
+      />
 
     </section>
 
@@ -57,43 +66,26 @@ defineProps<{
 
 </template>
 
-
 <style scoped>
 
 .weather-details-template {
-
   display: flex;
-
   flex-direction: column;
-
   width: 100%;
-
   min-width: 0;
-
   gap: 10px;
-
   box-sizing: border-box;
-
 }
-
 
 .weather-details-template__hero {
-
   width: 100%;
-
 }
 
-
 .weather-details-template__section {
-
   width: 100%;
-
   min-width: 0;
-
   padding: 0 20px;
-
   box-sizing: border-box;
-
 }
 
 </style>
