@@ -33,6 +33,7 @@ export interface WeatherData {
   high: number
   low: number
   timezone: number
+  dt: number
 }
 
 
@@ -149,5 +150,6 @@ export const getWeather = async (
     high,
     low,
     timezone: currentData.timezone,
+    dt: currentData.dt,
   }
 }

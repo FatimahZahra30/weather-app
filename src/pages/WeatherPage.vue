@@ -46,12 +46,14 @@ watch(searchQuery, (query) => {
   handleSearch(query)
 })
 
-const handleLocationSelect = (location: LocationResult) => {
+const handleLocationSelect = (
+  location: LocationResult,
+) => {
   searchQuery.value = ''
   suggestions.value = []
 
   router.push({
-    name: 'weather-details',
+    path: '/weather-details',
     query: {
       name: location.name,
       lat: location.lat,

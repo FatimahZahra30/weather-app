@@ -16,19 +16,22 @@ const icons = {
 
 type IconName = keyof typeof icons
 
-withDefaults(
-  defineProps<{
-    name: IconName
-    location: string
-    date: string
-    weather: string
-    temperature?: number
-    updateTime: string
-  }>(),
-  {
-    temperature: 0,
-  },
-)
+type WeatherIcon =
+  | 'cloudy'
+  | 'moderateRain'
+  | 'rainy'
+  | 'sunny'
+  | 'thunderstorm'
+
+defineProps<{
+  name: WeatherIcon
+  location: string
+  date: string
+  weather: string
+  temperature?: number
+  updateTime: string
+}>()
+
 </script>
 
 <template>
