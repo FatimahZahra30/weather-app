@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+
+import {
+  ref,
+  onMounted,
+  watch,
+} from 'vue'
+
+import {
+  useRouter,
+} from 'vue-router'
 
 import WeatherTemplate from '../components/templates/WeatherTemplate.vue'
+
 import AppIconButton from '../components/atoms/AppIconButton.vue'
 
 import {
@@ -29,7 +38,9 @@ const router = useRouter()
    ========================= */
 
 const goToProfile = () => {
+
   router.push('/profile')
+
 }
 
 
@@ -39,7 +50,8 @@ const goToProfile = () => {
 
 const searchQuery = ref('')
 
-const suggestions = ref<LocationResult[]>([])
+const suggestions =
+  ref<LocationResult[]>([])
 
 
 /* =========================
@@ -55,6 +67,7 @@ const handleSearch = async (
     suggestions.value = []
 
     return
+
   }
 
   try {
@@ -83,7 +96,9 @@ const handleSearch = async (
 watch(
   searchQuery,
   (query) => {
+
     handleSearch(query)
+
   },
 )
 
@@ -99,6 +114,7 @@ const handleLocationSelect = (
   searchQuery.value = ''
 
   suggestions.value = []
+
 
   router.push({
 
@@ -159,9 +175,11 @@ interface WeatherLocation {
 const weatherLocations =
   ref<WeatherLocation[]>([])
 
-const isLoading = ref(true)
+const isLoading =
+  ref(true)
 
-const errorMessage = ref('')
+const errorMessage =
+  ref('')
 
 
 /* =========================
@@ -172,16 +190,23 @@ const getLocalTime = (
   timezone: number,
 ) => {
 
-  const now = new Date()
+  const now =
+    new Date()
+
 
   const utcTime =
     now.getTime() +
-    now.getTimezoneOffset() * 60 * 1000
+    now.getTimezoneOffset() *
+    60 *
+    1000
+
 
   const localTime =
     new Date(
-      utcTime + timezone * 1000,
+      utcTime +
+      timezone * 1000,
     )
+
 
   return localTime.toLocaleTimeString(
     [],
@@ -199,113 +224,151 @@ const getLocalTime = (
    Load Saved Weather
    ========================= */
 
-const loadSavedWeather = async () => {
+const loadSavedWeather =
+  async () => {
 
-  try {
+    try {
 
-    isLoading.value = true
+      isLoading.value = true
 
-    errorMessage.value = ''
-
-
-    /* =========================
-       Get Saved Locations
-       ========================= */
-
-    savedLocations.value =
-      getSavedLocations()
+      errorMessage.value = ''
 
 
-    /* =========================
-       Nothing Saved
-       ========================= */
+      /* =========================
+         Get Latest Saved Locations
+         ========================= */
 
-    if (
-      savedLocations.value.length === 0
-    ) {
+      savedLocations.value =
+        getSavedLocations()
 
-      weatherLocations.value = []
 
-      return
+      /* =========================
+         No Saved Locations
+         ========================= */
+
+      if (
+        savedLocations.value.length === 0
+      ) {
+
+        weatherLocations.value = []
+
+        return
+
+      }
+
+
+      /* =========================
+         Get Weather For Every
+         Saved Location
+         ========================= */
+
+      const weatherResults =
+        await Promise.all(
+
+          savedLocations.value.map(
+            async (
+              location,
+            ) => {
+
+              const data =
+                await getWeather(
+                  location.lat,
+                  location.lon,
+                )
+
+
+              return {
+
+                location:
+                  data.name,
+
+                lat:
+                  location.lat,
+
+                lon:
+                  location.lon,
+
+                time:
+                  getLocalTime(
+                    data.timezone,
+                  ),
+
+                description:
+                  data.description,
+
+                temperature:
+                  Math.round(
+                    data.temperature,
+                  ),
+
+                high:
+                  Math.round(
+                    data.high,
+                  ),
+
+                low:
+                  Math.round(
+                    data.low,
+                  ),
+
+              }
+
+            },
+          ),
+
+        )
+
+
+      weatherLocations.value =
+        weatherResults
+
+
+    } catch (error) {
+
+      console.error(
+        'Home weather loading error:',
+        error,
+      )
+
+      errorMessage.value =
+        'Unable to load weather data.'
+
+
+    } finally {
+
+      isLoading.value = false
 
     }
 
-
-    /* =========================
-       Load Weather
-       For Every Saved Location
-       ========================= */
-
-    const weatherResults =
-      await Promise.all(
-
-        savedLocations.value.map(
-          async (location) => {
-
-            const data =
-              await getWeather(
-                location.lat,
-                location.lon,
-              )
-
-            return {
-
-              location: data.name,
-
-              lat: location.lat,
-
-              lon: location.lon,
-
-              time:
-                getLocalTime(
-                  data.timezone,
-                ),
-
-              description:
-                data.description,
-
-              temperature:
-                Math.round(
-                  data.temperature,
-                ),
-
-              high:
-                Math.round(
-                  data.high,
-                ),
-
-              low:
-                Math.round(
-                  data.low,
-                ),
-
-            }
-
-          },
-        ),
-
-      )
-
-
-    weatherLocations.value =
-      weatherResults
-
-
-  } catch (error) {
-
-    console.error(
-      'Home weather loading error:',
-      error,
-    )
-
-    errorMessage.value =
-      'Unable to load weather data.'
-
-  } finally {
-
-    isLoading.value = false
-
   }
+
+
+/* =========================
+   Open Weather Details
+   ========================= */
+
+const openWeatherDetails = (
+  location: WeatherLocation,
+) => {
+
+  router.push({
+
+    path: '/weather-details',
+
+    query: {
+
+      name:
+        location.location,
+
+      lat:
+        location.lat,
+
+      lon:
+        location.lon,
+
+    },
+
+  })
 
 }
 
@@ -319,6 +382,7 @@ onMounted(() => {
   loadSavedWeather()
 
 })
+
 </script>
 
 
@@ -339,9 +403,15 @@ onMounted(() => {
 
 
       <AppIconButton
+
         icon="profile"
+
         :size="26"
-        @click="goToProfile"
+
+        @click="
+          goToProfile
+        "
+
       />
 
     </section>
@@ -355,7 +425,9 @@ onMounted(() => {
       v-if="isLoading"
       class="status-message"
     >
+
       Loading weather...
+
     </p>
 
 
@@ -367,7 +439,9 @@ onMounted(() => {
       v-else-if="errorMessage"
       class="status-message"
     >
+
       {{ errorMessage }}
+
     </p>
 
 
@@ -375,90 +449,31 @@ onMounted(() => {
          Weather
          ========================= -->
 
-    <template v-else>
+    <WeatherTemplate
 
+      v-else
 
-      <!-- =========================
-           Saved Location Exists
-           ========================= -->
+      v-model:search-query="
+        searchQuery
+      "
 
-      <WeatherTemplate
-        v-if="weatherLocations.length > 0"
+      :weather-locations="
+        weatherLocations
+      "
 
-        v-model:search-query="
-          searchQuery
-        "
+      :suggestions="
+        suggestions
+      "
 
-        :location="
-          weatherLocations[0].location
-        "
+      @select-location="
+        handleLocationSelect
+      "
 
-        :time="
-          weatherLocations[0].time
-        "
+      @open-location="
+        openWeatherDetails
+      "
 
-        :description="
-          weatherLocations[0].description
-        "
-
-        :temperature="
-          weatherLocations[0].temperature
-        "
-
-        :high="
-          weatherLocations[0].high
-        "
-
-        :low="
-          weatherLocations[0].low
-        "
-
-        :suggestions="
-          suggestions
-        "
-
-        @select-location="
-          handleLocationSelect
-        "
-      />
-
-
-      <!-- =========================
-           No Saved Locations
-           ========================= -->
-
-      <WeatherTemplate
-        v-else
-
-        v-model:search-query="
-          searchQuery
-        "
-
-        location="No saved locations"
-
-        time=""
-
-        description="
-          Search for a location to get started
-        "
-
-        :temperature="0"
-
-        :high="0"
-
-        :low="0"
-
-        :suggestions="
-          suggestions
-        "
-
-        @select-location="
-          handleLocationSelect
-        "
-      />
-
-
-    </template>
+    />
 
 
   </main>
@@ -469,7 +484,9 @@ onMounted(() => {
 <style scoped>
 
 :global(body) {
+
   background-color: #ffffff;
+
 }
 
 
