@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import dayBackground from '../../assets/weather/day-background.jpg'
+import nightBackground from '../../assets/weather/night-background.jpg'
+import nightOverlay from '../../assets/weather/night-overlay.jpg'
+
 withDefaults(
   defineProps<{
     location?: string
@@ -7,8 +11,6 @@ withDefaults(
     temperature?: number
     high?: number
     low?: number
-    backgroundImage?: string
-    overlayImage?: string
     isNight?: boolean
   }>(),
   {
@@ -18,8 +20,6 @@ withDefaults(
     temperature: 0,
     high: 0,
     low: 0,
-    backgroundImage: '',
-    overlayImage: '',
     isNight: false,
   },
 )
@@ -27,29 +27,41 @@ withDefaults(
 
 <template>
   <article class="weather-card">
-    <!-- Background image -->
+
+    <!-- DAY BACKGROUND -->
     <img
-      v-if="backgroundImage"
-      class="weather-card__background"
-      :src="backgroundImage"
+      v-if="!isNight"
+      class="weather-card__background weather-card__background--day"
+      :src="dayBackground"
       alt=""
     />
 
-    <!-- Additional layer used for the night design -->
+    <!-- NIGHT BACKGROUND -->
     <img
-      v-if="isNight && overlayImage"
-      class="weather-card__overlay"
-      :src="overlayImage"
+      v-if="isNight"
+      class="weather-card__background weather-card__background--night"
+      :src="nightBackground"
       alt=""
     />
 
-    <!-- Dark overlay to keep text readable -->
+    <!-- NIGHT OVERLAY -->
+    <img
+      v-if="isNight"
+      class="weather-card__night-overlay"
+      :src="nightOverlay"
+      alt=""
+    />
+
+    <!-- DARK SHADE -->
     <div class="weather-card__shade"></div>
 
-    <!-- Weather information -->
+    <!-- CONTENT -->
     <div class="weather-card__content">
+
       <div class="weather-card__top">
+
         <div class="weather-card__location-info">
+
           <h3 class="weather-card__location">
             {{ location }}
           </h3>
@@ -57,14 +69,17 @@ withDefaults(
           <p class="weather-card__time">
             {{ time }}
           </p>
+
         </div>
 
         <p class="weather-card__temperature">
           {{ temperature }}°
         </p>
+
       </div>
 
       <div class="weather-card__bottom">
+
         <p class="weather-card__description">
           {{ description }}
         </p>
@@ -73,8 +88,11 @@ withDefaults(
           <span>H: {{ high }}°</span>
           <span>L: {{ low }}°</span>
         </div>
+
       </div>
+
     </div>
+
   </article>
 </template>
 
@@ -82,58 +100,106 @@ withDefaults(
 .weather-card {
   position: relative;
   width: 100%;
+  height: 115px;
   overflow: hidden;
   border-radius: 16px;
   background: #f5f5f5;
 }
 
-/* Main background image */
+/* =========================
+   Main background - shared
+   ========================= */
+
 .weather-card__background {
   position: absolute;
   inset: 0;
+
   width: 100%;
   height: 100%;
-  object-fit: cover;
 
-  /* Adjust these to match the Figma image */
-  object-position: center;
-  transform: scale(1.1);
+  object-fit: cover;
 
   z-index: 0;
 }
 
-/* Additional night layer */
-.weather-card__overlay {
+
+/* =========================
+   DAY background
+   ========================= */
+
+.weather-card__background--day {
+  object-position: center;
+  transform: scale(1.1);
+}
+
+
+/* =========================
+   NIGHT background
+   ========================= */
+
+.weather-card__background--night {
+  object-position: top right;
+  transform: scale(1.1);
+}
+
+/* =========================
+   Night overlay
+   ========================= */
+
+.weather-card__night-overlay {
   position: absolute;
   inset: 0;
+
   width: 100%;
   height: 100%;
-  object-fit: cover;
 
+  object-fit: cover;
   object-position: center;
+
+  opacity: 0.6;
+
   z-index: 1;
 }
 
-/* Slight shade over the images */
+/* =========================
+   Shade
+   ========================= */
+
 .weather-card__shade {
   position: absolute;
   inset: 0;
+
   background: rgb(0 0 0 / 15%);
+
   z-index: 2;
 }
 
-/* Actual text/content */
+/* =========================
+   Content
+   ========================= */
+
 .weather-card__content {
   position: relative;
+
   z-index: 3;
+
   height: 100%;
+
   padding: 16px 16px 10px;
+
+  box-sizing: border-box;
+
   color: white;
 }
+
+/* =========================
+   Layout
+   ========================= */
 
 .weather-card__top,
 .weather-card__bottom {
   display: flex;
+
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -142,6 +208,10 @@ withDefaults(
   align-items: flex-end;
   margin-top: 20px;
 }
+
+/* =========================
+   Text
+   ========================= */
 
 .weather-card__location,
 .weather-card__time,
@@ -170,17 +240,28 @@ withDefaults(
   font-size: 14px;
 }
 
+/* =========================
+   High / Low
+   ========================= */
+
 .weather-card__range {
   display: flex;
   flex-direction: row;
+
   gap: 4px;
+
   font-size: 13px;
 }
+
+/* =========================
+   Location
+   ========================= */
 
 .weather-card__location-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   margin: 0;
   padding: 0;
 }

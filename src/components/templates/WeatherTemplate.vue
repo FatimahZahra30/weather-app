@@ -11,23 +11,15 @@ import type { LocationResult } from '../../api/weather'
    ========================= */
 
 interface WeatherLocation {
-
   location: string
-
   lat: number
-
   lon: number
-
   time: string
-
   description: string
-
   temperature: number
-
   high: number
-
   low: number
-
+  isNight: boolean
 }
 
 
@@ -180,31 +172,13 @@ const handleOpenLocation = (
       >
 
         <LocationWeatherCard
-
-          :location="
-            location.location
-          "
-
-          :time="
-            location.time
-          "
-
-          :description="
-            location.description
-          "
-
-          :temperature="
-            location.temperature
-          "
-
-          :high="
-            location.high
-          "
-
-          :low="
-            location.low
-          "
-
+          :location="location.location"
+          :time="location.time"
+          :description="location.description"
+          :temperature="location.temperature"
+          :high="location.high"
+          :low="location.low"
+          :is-night="location.isNight"
         />
 
       </article>

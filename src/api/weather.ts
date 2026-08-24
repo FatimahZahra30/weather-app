@@ -44,6 +44,8 @@ export interface WeatherData {
   low: number
   timezone: number
   dt: number
+  sunrise: number
+  sunset: number
   hourly: ForecastItem[]
   daily: DailyForecast[]
 }
@@ -195,6 +197,8 @@ export const getWeather = async (
     low,
     timezone: currentData.timezone,
     dt: currentData.dt,
+    sunrise: currentData.sys.sunrise,
+    sunset: currentData.sys.sunset,
     hourly,
     daily,
   }
