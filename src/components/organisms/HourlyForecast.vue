@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import WeeklyForcastItem from '../molecules/WeeklyForcastItem.vue'
+import HourlyForcastCard from '../molecules/HourlyForecastCard.vue'
 
-import type { DailyForecast } from '../../api/weather'
+import type { ForecastItem } from '../../api/weather.ts'
 
 type WeatherIcon =
   | 'cloudy'
@@ -11,7 +11,7 @@ type WeatherIcon =
   | 'thunderstorm'
 
 defineProps<{
-  daily: DailyForecast[]
+  hourly: ForecastItem[]
 }>()
 
 const getWeatherIcon = (
@@ -42,38 +42,39 @@ const getWeatherIcon = (
   return iconMap[icon] || 'cloudy'
 }
 
-const formatWeather = (
-  description: string,
+const formatTime = (
+  time: string,
 ) => {
 
-  if (!description) {
-    return ''
-  }
+  const date = new Date(time)
 
-  return (
-    description.charAt(0).toUpperCase() +
-    description.slice(1)
+  return date.toLocaleTimeString(
+    'en-US',
+    {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    },
   )
 }
 </script>
 
 <template>
 
-  <section class="weekly-forecast">
+  <section class="hourly-forecast">
 
-    <h2 class="weekly-forecast__title">
-      Weekly Forecast
+    <h2 class="hourly-forecast__title">
+      Hourly Forecast
     </h2>
 
-    <div class="weekly-forecast__list">
+    <div class="hourly-forecast__scroll">
 
-      <WeeklyForcastItem
-        v-for="(forecast, index) in daily.slice(0, 5)"
+      <HourlyForcastCard
+        v-for="(forecast, index) in hourly.slice(0, 6)"
         :key="index"
         :name="getWeatherIcon(forecast.icon)"
-        :day="forecast.day"
-        :weather="formatWeather(forecast.description)"
         :temperature="Math.round(forecast.temperature)"
+        :time="formatTime(forecast.time)"
       />
 
     </div>
@@ -84,13 +85,13 @@ const formatWeather = (
 
 <style scoped>
 
-.weekly-forecast {
+.hourly-forecast {
   width: 100%;
   min-width: 0;
 }
 
-.weekly-forecast__title {
-  margin: 0 0 8px;
+.hourly-forecast__title {
+  margin: 0 0 4px;
   padding-top: 18px;
   padding-bottom: 15px;
   font-size: 21px;
@@ -99,11 +100,25 @@ const formatWeather = (
   color: #201C1C;
 }
 
-.weekly-forecast__list {
+.hourly-forecast__scroll {
   display: flex;
-  flex-direction: column;
-  gap: 13px;
+  flex-wrap: nowrap;
+  gap: 10px;
   width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.hourly-forecast__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hourly-forecast__scroll :deep(.hourly-forecast-card) {
+  flex: 0 0 calc((100% - 24px) / 4);
+  width: calc((100% - 24px) / 4);
+  min-width: calc((100% - 24px) / 4);
 }
 
 </style>

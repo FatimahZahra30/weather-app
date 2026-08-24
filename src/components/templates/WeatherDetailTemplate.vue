@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import WeatherHero from '../organisms/WeatherHero.vue'
-import HourlyForcast from '../organisms/HourlyForcast.vue'
-import WeeklyForcast from '../organisms/WeeklyForcast.vue'
+import HourlyForcast from '../organisms/HourlyForecast.vue'
+import WeeklyForcast from '../organisms/WeeklyForecast.vue'
 
 import type {
   ForecastItem,
