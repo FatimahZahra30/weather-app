@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SearchBar from '../molecules/SearchBar.vue'
 import LocationWeatherCard from '../molecules/LocationWeatherCard.vue'
+import type { LocationResult } from '../../api/weather'
 
 defineProps<{
   location: string
@@ -9,18 +10,27 @@ defineProps<{
   temperature: number
   high: number
   low: number
+  suggestions: LocationResult[]
 }>()
 
 const searchQuery = defineModel<string>('searchQuery', {
   default: '',
 })
+
+const emit = defineEmits<{
+  'select-location': [location: LocationResult]
+}>()
 </script>
 
 <template>
   <main class="weather-template">
 
     <section class="weather-template__search">
-      <SearchBar v-model="searchQuery" />
+      <SearchBar
+        v-model="searchQuery"
+        :suggestions="suggestions"
+        @select-location="emit('select-location', $event)"
+      />
     </section>
 
     <section class="weather-template__current">
@@ -50,18 +60,13 @@ const searchQuery = defineModel<string>('searchQuery', {
   box-sizing: border-box;
 }
 
-/* Search */
-
 .weather-template__search {
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Current Weather */
-
 .weather-template__current {
   width: 100%;
   box-sizing: border-box;
 }
-
 </style>
