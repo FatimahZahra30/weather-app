@@ -14,8 +14,6 @@ const icons = {
   thunderstorm,
 }
 
-type IconName = keyof typeof icons
-
 type WeatherIcon =
   | 'cloudy'
   | 'moderateRain'

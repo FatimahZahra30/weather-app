@@ -6,6 +6,12 @@ import AppIconButton from '../components/atoms/AppIconButton.vue'
 import WeatherDetailTemplate from '../components/templates/WeatherDetailTemplate.vue'
 import { getWeather } from '../api/weather'
 
+import {
+  isLocationSaved,
+  addSavedLocation,
+  removeSavedLocation,
+} from '../utils/savedLocations'
+
 
 /* =========================
    Types
@@ -33,6 +39,13 @@ const route = useRoute()
 
 const lat = Number(route.query.lat)
 const lon = Number(route.query.lon)
+
+
+/* =========================
+   Saved State
+   ========================= */
+
+const isSaved = ref(false)
 
 
 /* =========================
@@ -69,6 +82,41 @@ const errorMessage = ref('')
    ========================= */
 
 const goToWeather = () => {
+  router.push('/')
+}
+
+
+/* =========================
+   Add Location
+   ========================= */
+
+const addLocation = () => {
+  addSavedLocation({
+    name: weather.value.location,
+    lat,
+    lon,
+  })
+
+  isSaved.value = true
+
+  // Go back to Home after adding
+  router.push('/')
+}
+
+
+/* =========================
+   Delete Location
+   ========================= */
+
+const deleteLocation = () => {
+  removeSavedLocation(
+    lat,
+    lon,
+  )
+
+  isSaved.value = false
+
+  // Go back to Home after deleting
   router.push('/')
 }
 
@@ -145,63 +193,32 @@ const getWeatherIcon = (
     WeatherIcon
   > = {
 
-    /* Clear sky */
-
     '01d': 'sunny',
     '01n': 'cloudy',
-
-
-    /* Few clouds */
 
     '02d': 'cloudy',
     '02n': 'cloudy',
 
-
-    /* Scattered clouds */
-
     '03d': 'cloudy',
     '03n': 'cloudy',
-
-
-    /* Broken clouds */
 
     '04d': 'cloudy',
     '04n': 'cloudy',
 
-
-    /* Shower rain */
-
     '09d': 'rainy',
     '09n': 'rainy',
-
-
-    /* Rain */
 
     '10d': 'moderateRain',
     '10n': 'rainy',
 
-
-    /* Thunderstorm */
-
     '11d': 'thunderstorm',
     '11n': 'thunderstorm',
-
-
-    /* Snow
-       No snow icon available,
-       so use cloudy as fallback. */
 
     '13d': 'cloudy',
     '13n': 'cloudy',
 
-
-    /* Mist
-       No mist icon available,
-       so use cloudy as fallback. */
-
     '50d': 'cloudy',
     '50n': 'cloudy',
-
   }
 
   return iconMap[icon] || 'cloudy'
@@ -220,6 +237,16 @@ onMounted(async () => {
     errorMessage.value = ''
 
 
+    /* Check if already saved */
+
+    isSaved.value = isLocationSaved(
+      lat,
+      lon,
+    )
+
+
+    /* Get weather */
+
     const data = await getWeather(
       lat,
       lon,
@@ -232,7 +259,7 @@ onMounted(async () => {
     )
 
 
-    /* Get local date and time */
+    /* Get local date + time */
 
     const localDateTime =
       getLocalDateTime(
@@ -241,7 +268,7 @@ onMounted(async () => {
       )
 
 
-    /* Update weather state */
+    /* Update weather */
 
     weather.value = {
 
@@ -303,9 +330,7 @@ onMounted(async () => {
   <main class="weather-detail-page">
 
 
-    <!-- =========================
-         Header
-         ========================= -->
+    <!-- Header -->
 
     <section class="header">
 
@@ -316,17 +341,29 @@ onMounted(async () => {
       />
 
 
+      <!-- DELETE if saved -->
+
       <AppIconButton
+        v-if="isSaved"
         icon="delete"
         :size="16"
+        @click="deleteLocation"
+      />
+
+
+      <!-- ADD if not saved -->
+
+      <AppIconButton
+        v-else
+        icon="plus"
+        :size="20"
+        @click="addLocation"
       />
 
     </section>
 
 
-    <!-- =========================
-         Loading
-         ========================= -->
+    <!-- Loading -->
 
     <p
       v-if="isLoading"
@@ -336,9 +373,7 @@ onMounted(async () => {
     </p>
 
 
-    <!-- =========================
-         Error
-         ========================= -->
+    <!-- Error -->
 
     <p
       v-else-if="errorMessage"
@@ -348,9 +383,7 @@ onMounted(async () => {
     </p>
 
 
-    <!-- =========================
-         Weather Details
-         ========================= -->
+    <!-- Weather Details -->
 
     <WeatherDetailTemplate
       v-else
@@ -364,7 +397,6 @@ onMounted(async () => {
       :low="weather.low"
     />
 
-
   </main>
 
 </template>
@@ -372,39 +404,24 @@ onMounted(async () => {
 
 <style scoped>
 
-/* =========================
-   Page
-   ========================= */
-
 .weather-detail-page {
-
   position: relative;
 
   width: 100%;
-
   min-height: 100vh;
 
   margin: 0;
-
   padding: 0;
 
   box-sizing: border-box;
-
 }
 
 
-/* =========================
-   Header
-   ========================= */
-
 .header {
-
   position: absolute;
 
   top: 20px;
-
   left: 0;
-
   right: 0;
 
   z-index: 10;
@@ -412,7 +429,6 @@ onMounted(async () => {
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   width: 100%;
@@ -422,16 +438,10 @@ onMounted(async () => {
   box-sizing: border-box;
 
   color: aliceblue;
-
 }
 
 
-/* =========================
-   Status
-   ========================= */
-
 .status-message {
-
   padding-top: 100px;
 
   text-align: center;
@@ -439,7 +449,6 @@ onMounted(async () => {
   font-size: 16px;
 
   color: #757575;
-
 }
 
 </style>
