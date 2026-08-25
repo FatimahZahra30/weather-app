@@ -6,6 +6,7 @@ import rainy from '../../assets/weather-icons/rainy.png'
 import sunny from '../../assets/weather-icons/sunny.png'
 import thunderstorm from '../../assets/weather-icons/thunderstorm.png'
 
+/** All the potential weather icons */
 const icons = {
   cloudy,
   moderateRain,
@@ -17,6 +18,7 @@ const icons = {
 
 type IconName = keyof typeof icons
 
+/** Props to be passed in for hourly card details */
 withDefaults(
   defineProps<{
     name: IconName
@@ -53,17 +55,17 @@ withDefaults(
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
   min-width: 0;
-
   padding: 12px 8px;
-
   box-sizing: border-box;
-
   border-radius: 4px;
   background: #F5F5F5;
 }
+
+/* =========================
+   Hourly card item styling
+   ========================= */
 
 .hourly-forecast-card__icon {
   width: 35px;

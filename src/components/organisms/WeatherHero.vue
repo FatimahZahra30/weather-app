@@ -6,6 +6,7 @@ import sunny from '../../assets/weather-icons/sunny.png'
 import thunderstorm from '../../assets/weather-icons/thunderstorm.png'
 import AppIconButton from '../atoms/AppIconButton.vue'
 
+/** All the potential weather icons */
 const icons = {
   cloudy,
   moderateRain,
@@ -101,6 +102,10 @@ defineProps<{
 
   color: white;
 }
+
+/* =========================
+   Weather Hero details
+   ========================= */
 
 /* Location */
 .weather-hero__location {

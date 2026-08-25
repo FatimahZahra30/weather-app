@@ -2,7 +2,6 @@
 import WeatherHero from '../organisms/WeatherHero.vue'
 import HourlyForcast from '../organisms/HourlyForecast.vue'
 import WeeklyForcast from '../organisms/WeeklyForecast.vue'
-
 import type {
   ForecastItem,
   DailyForecast,
@@ -15,6 +14,7 @@ type WeatherIcon =
   | 'sunny'
   | 'thunderstorm'
 
+/** Props for all details on weather details page */
 defineProps<{
   location: string
   date: string
@@ -76,6 +76,10 @@ defineProps<{
   gap: 10px;
   box-sizing: border-box;
 }
+
+/* =========================
+   Hero and forcast cards
+   ========================= */
 
 .weather-details-template__hero {
   width: 100%;

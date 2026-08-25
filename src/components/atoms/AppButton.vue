@@ -12,6 +12,9 @@ withDefaults(
 </script>
 
 <template>
+  /* =========================
+   Button setup
+   ========================= */
   <button
     :class="['app-button', `app-button--${variant}`]"
     :type="type"
@@ -32,6 +35,7 @@ withDefaults(
   cursor: pointer;
 }
 
+/** Button color variations */
 .app-button--primary {
   background: #2563eb;
   color: white;

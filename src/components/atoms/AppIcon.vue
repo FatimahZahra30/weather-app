@@ -14,6 +14,7 @@ import {
 
 import caretRight from '../../assets/icons/right-arrows.png'
 
+/** All the icons used on this weather app */
 const icons = {
   arrowLeft: ChevronLeft,
   chevronRight: ChevronRight,
@@ -29,6 +30,9 @@ const icons = {
 
 type IconName = keyof typeof icons | 'caretRight'
 
+/** Type of parameters that can be input for
+ * a particular icon
+ */
 withDefaults(
   defineProps<{
     name: IconName

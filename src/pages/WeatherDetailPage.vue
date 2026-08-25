@@ -447,6 +447,10 @@ onMounted(async () => {
   color: #757575;
 }
 
+/* =========================
+   Weather share button
+   ========================= */
+
 .share-button {
   display: flex;
   flex-direction: row;

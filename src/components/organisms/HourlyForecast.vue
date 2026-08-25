@@ -3,6 +3,7 @@ import HourlyForcastCard from '../molecules/HourlyForecastCard.vue'
 
 import type { ForecastItem } from '../../api/weather.ts'
 
+/** Converting each weather icon into a type */
 type WeatherIcon =
   | 'cloudy'
   | 'moderateRain'
@@ -14,6 +15,9 @@ defineProps<{
   hourly: ForecastItem[]
 }>()
 
+/* =========================
+   Weather icons mapping
+   ========================= */
 const getWeatherIcon = (
   icon: string,
 ): WeatherIcon => {
@@ -42,6 +46,9 @@ const getWeatherIcon = (
   return iconMap[icon] || 'cloudy'
 }
 
+/* =========================
+   Formatting time
+   ========================= */
 const formatTime = (
   time: string,
 ) => {
@@ -69,6 +76,7 @@ const formatTime = (
 
     <div class="hourly-forecast__scroll">
 
+      <!-- Creating new hourly forcast card for exactly 6 times retrieved -->
       <HourlyForcastCard
         v-for="(forecast, index) in hourly.slice(0, 6)"
         :key="index"
@@ -99,6 +107,10 @@ const formatTime = (
   text-align: left;
   color: #201C1C;
 }
+
+/* =========================
+   Hourly forcast carousel
+   ========================= */
 
 .hourly-forecast__scroll {
   display: flex;

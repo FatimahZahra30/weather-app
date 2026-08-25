@@ -5,6 +5,10 @@ import AppButton from '../atoms/AppButton.vue'
 import AppInput from '../atoms/AppInput.vue'
 import USFlag from '../../assets/icons/US-flag.png'
 
+/* =========================
+   Defining Profile Shape
+   ========================= */
+
 interface Profile {
   name: string
   email: string
@@ -16,6 +20,10 @@ const props = defineProps<{
   isEditing: boolean
 }>()
 
+/* =========================
+  Local reactive state
+   ========================= */
+
 const name = ref(props.profile.name)
 const email = ref(props.profile.email)
 const phone = ref(props.profile.phone)
@@ -24,8 +32,15 @@ const nameError = ref('')
 const emailError = ref('')
 const phoneError = ref('')
 
+/* =========================
+   Waits for changes
+   ========================= */
+
 watch(
   () => props.profile,
+
+  /** run this when a change happens */
+
   (newProfile) => {
     name.value = newProfile.name
     email.value = newProfile.email
@@ -33,6 +48,10 @@ watch(
   },
   { deep: true },
 )
+
+/* =========================
+   Passes changes to parent
+   ========================= */
 
 const emit = defineEmits<{
   edit: []
@@ -289,10 +308,8 @@ const formatPhone = (event: Event) => {
 .profile-form {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   min-height: 360px;
-
   box-sizing: border-box;
 }
 
@@ -303,9 +320,7 @@ const formatPhone = (event: Event) => {
 
 .profile-form__field {
   position: relative;
-
   width: 100%;
-
   margin-bottom: 15px;
 }
 
@@ -316,19 +331,13 @@ const formatPhone = (event: Event) => {
 
 .profile-form__label {
   position: absolute;
-
   top: 3px;
   left: 12px;
-
   z-index: 2;
-
   margin: 0;
-
   font-size: 8px;
   font-weight: 500;
-
   color: #757575;
-
   pointer-events: none;
 }
 
@@ -340,11 +349,8 @@ const formatPhone = (event: Event) => {
 .profile-form__input {
   width: 100%;
   height: 55px;
-
   box-sizing: border-box;
-
   padding: 18px 12px 6px;
-
   font-weight: 500;
 }
 
@@ -356,17 +362,12 @@ const formatPhone = (event: Event) => {
 .phone-input {
   display: flex;
   align-items: center;
-
   width: 100%;
   height: 55px;
-
   box-sizing: border-box;
-
   border: 1px solid #F5F5F5;
   border-radius: 10px;
-
   background: #F5F5F5;
-
   overflow: hidden;
 }
 
@@ -381,15 +382,11 @@ const formatPhone = (event: Event) => {
 .phone-input__flag {
   width: 20px;
   height: 14px;
-
   object-fit: cover;
-
   flex-shrink: 0;
-
   margin-left: 10px;
   margin-right: 8px;
   margin-top: 15px;
-
   border-radius: 2px;
 }
 
@@ -400,25 +397,17 @@ const formatPhone = (event: Event) => {
 
 .phone-input__field {
   flex: 1;
-
   width: 100%;
   height: 100%;
-
   min-width: 0;
-
   padding: 15px 12px 0 0;
-
   border: none;
   outline: none;
-
   background: transparent;
-
   box-sizing: border-box;
-
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
-
   color: #201C1C;
 }
 
@@ -449,9 +438,7 @@ const formatPhone = (event: Event) => {
 
 .profile-form__save {
   width: 100%;
-
   margin-top: auto;
-
   background-color: #2E3A5A;
 }
 
@@ -466,9 +453,7 @@ const formatPhone = (event: Event) => {
 
 .profile-form__error {
   margin: 5px 0 0;
-
   font-size: 12px;
-
   color: #D9534F;
 }
 

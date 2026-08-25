@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
 
+/** All the icons that can be used as buttons */
 const props = withDefaults(
   defineProps<{
     icon: 'arrowLeft' | 'caretRight' | 'chevronRight' | 'profile' | 'edit' | 'plus' | 'refresh' | 'search' | 'delete'
@@ -11,6 +12,7 @@ const props = withDefaults(
   },
 )
 
+/** Tells the parent that the button had been clicked */
 const emit = defineEmits<{
   click: []
 }>()

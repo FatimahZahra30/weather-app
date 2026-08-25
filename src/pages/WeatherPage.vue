@@ -361,6 +361,10 @@ onMounted(() => {
   padding: 16px 24px 24px;
 }
 
+/* =========================
+   Header for main page
+   ========================= */
+
 .header {
   display: flex;
   align-items: center;

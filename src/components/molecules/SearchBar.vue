@@ -8,12 +8,17 @@ defineProps<{
   suggestions: LocationResult[]
 }>()
 
+/** Updates the search bar related values */
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   'select-location': [location: LocationResult]
   'search-focus': []
   'search-close': []
 }>()
+
+/* =========================
+   Location selection
+   ========================= */
 
 const selectLocation = (location: LocationResult) => {
   emit('select-location', location)
@@ -175,14 +180,16 @@ const selectLocation = (location: LocationResult) => {
   cursor: pointer;
 }
 
-/* Suggestions */
+/* =========================
+   Suggestion
+   ========================= */
+
 .search-bar__suggestions {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-/* Suggestion */
 .search-bar__suggestion {
   display: flex;
   flex-direction: column;
@@ -209,6 +216,10 @@ const selectLocation = (location: LocationResult) => {
 .search-bar__suggestion:active {
   background: #F7F7F7;
 }
+
+/* =========================
+   Location Info
+   ========================= */
 
 /* Location Name */
 .suggestion__name {

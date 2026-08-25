@@ -10,9 +10,14 @@ type WeatherIcon =
   | 'sunny'
   | 'thunderstorm'
 
+  /** Requires list of all the subsequent days for forcast */
 defineProps<{
   daily: DailyForecast[]
 }>()
+
+/* =========================
+   Weather icon mapping
+   ========================= */
 
 const getWeatherIcon = (
   icon: string,
@@ -67,6 +72,7 @@ const formatWeather = (
 
     <div class="weekly-forecast__list">
 
+      <!-- Creates a weekly weather card for each item passed in -->
       <WeeklyForcastItem
         v-for="(forecast, index) in daily.slice(1, 6)"
         :key="index"

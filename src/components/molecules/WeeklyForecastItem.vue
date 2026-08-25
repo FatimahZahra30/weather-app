@@ -6,6 +6,7 @@ import sunny from '../../assets/weather-icons/sunny.png'
 import thunderstorm from '../../assets/weather-icons/thunderstorm.png'
 import AppIconButton from '../atoms/AppIconButton.vue'
 
+/** All the potention weather icons */
 const icons = {
   cloudy,
   moderateRain,
@@ -16,6 +17,7 @@ const icons = {
 
 type IconName = keyof typeof icons
 
+/** Props for each weekly weather details */
 withDefaults(
   defineProps<{
     name: IconName
@@ -84,7 +86,10 @@ withDefaults(
   background: #D2DFFF;
 }
 
-/* Weather icon */
+/* =========================
+   Weather Icon
+   ========================= */
+
 .weekly-icon-container {
   display: flex;
   align-items: center;

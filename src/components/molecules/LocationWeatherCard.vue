@@ -3,6 +3,7 @@ import dayBackground from '../../assets/weather/day-background.jpg'
 import nightBackground from '../../assets/weather/night-background.jpg'
 import nightOverlay from '../../assets/weather/night-overlay.jpg'
 
+/** Props for location weather card details */
 withDefaults(
   defineProps<{
     location?: string
@@ -88,11 +89,8 @@ withDefaults(
           <span>H: {{ high }}°</span>
           <span>L: {{ low }}°</span>
         </div>
-
       </div>
-
     </div>
-
   </article>
 </template>
 
@@ -113,12 +111,9 @@ withDefaults(
 .weather-card__background {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
   z-index: 0;
 }
 
@@ -149,15 +144,11 @@ withDefaults(
 .weather-card__night-overlay {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center;
-
   opacity: 0.6;
-
   z-index: 1;
 }
 
@@ -168,9 +159,7 @@ withDefaults(
 .weather-card__shade {
   position: absolute;
   inset: 0;
-
   background: rgb(0 0 0 / 15%);
-
   z-index: 2;
 }
 
@@ -180,15 +169,10 @@ withDefaults(
 
 .weather-card__content {
   position: relative;
-
   z-index: 3;
-
   height: 100%;
-
   padding: 16px 16px 10px;
-
   box-sizing: border-box;
-
   color: white;
 }
 
@@ -199,7 +183,6 @@ withDefaults(
 .weather-card__top,
 .weather-card__bottom {
   display: flex;
-
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -247,9 +230,7 @@ withDefaults(
 .weather-card__range {
   display: flex;
   flex-direction: row;
-
   gap: 4px;
-
   font-size: 13px;
 }
 
@@ -261,7 +242,6 @@ withDefaults(
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   margin: 0;
   padding: 0;
 }

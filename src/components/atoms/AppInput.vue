@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+/** The different types of text input fields */
 withDefaults(
   defineProps<{
     modelValue?: string
@@ -18,6 +20,7 @@ withDefaults(
   },
 )
 
+/** Passes in the new input value */
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
@@ -45,28 +48,24 @@ const emit = defineEmits<{
 .app-input {
   width: 100%;
   height: 44px;
-
   padding: 0 12px;
-
   box-sizing: border-box;
-
   border: 1px solid #F5F5F5;
   border-radius: 10px;
-
   background: #F5F5F5;
-
   font-family: inherit;
   font-size: 14px;
   color: #201C1C;
-
   outline: none;
 }
 
+/** Styling for the placeholder on the input bar */
 .app-input::placeholder {
   color: #8C939D;
   font-size: 16px;
 }
 
+/** Adds a focus when input bar is clicked on */
 .app-input:focus {
   box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
 }
@@ -76,6 +75,7 @@ const emit = defineEmits<{
   opacity: 0.6;
 }
 
+/** Ensures default input bar cancel button isnt seen */
 .app-input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;

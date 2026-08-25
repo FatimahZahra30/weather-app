@@ -3,6 +3,7 @@ import SearchBar from '../molecules/SearchBar.vue'
 import LocationWeatherCard from '../molecules/LocationWeatherCard.vue'
 import type { LocationResult } from '../../api/weather'
 
+/** Describing layout of weather location details */
 interface WeatherLocation {
   location: string
   lat: number
@@ -30,10 +31,17 @@ const emit = defineEmits<{
   'search-close': []
 }>()
 
+/* =========================
+   Search queries
+   ========================= */
+
 const handleSearchUpdate = (value: string) => {
   emit('update:searchQuery', value)
 }
 
+/** Passes location so that parent can navigate to 
+ * weather details page with the details of that locaiton
+ */
 const handleLocationSelect = (
   location: LocationResult,
 ) => {
@@ -133,6 +141,10 @@ const handleSearchClose = () => {
   box-sizing: border-box;
 }
 
+/* =========================
+   Search bar
+   ========================= */
+
 .weather-template--searching {
   gap: 0;
 }
@@ -143,6 +155,10 @@ const handleSearchClose = () => {
   box-sizing: border-box;
   z-index: 100;
 }
+
+/* =========================
+   Weather location cards
+   ========================= */
 
 .weather-template__locations {
   display: flex;
@@ -157,6 +173,7 @@ const handleSearchClose = () => {
   transition: transform 0.15s ease;
 }
 
+/** Movement of location card when hovered */
 .weather-template__location:hover {
   transform: translateY(-2px);
 }
