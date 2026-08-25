@@ -75,4 +75,9 @@ const emit = defineEmits<{
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+.app-input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
 </style>

@@ -8,6 +8,7 @@ import {
   RotateCw,
   Search,
   Trash2,
+  CircleX,
 } from 'lucide-vue-next'
 
 import caretRight from '../../assets/icons/right-arrows.png'
@@ -21,6 +22,7 @@ const icons = {
   refresh: RotateCw,
   search: Search,
   delete: Trash2,
+  x: CircleX,
 }
 
 type IconName = keyof typeof icons | 'caretRight'

@@ -26,13 +26,33 @@ import {
 
 const router = useRouter()
 
+/* =========================
+   Navigation
+   ========================= */
+
 const goToProfile = () => {
   router.push('/profile')
 }
 
+/* =========================
+   Search
+   ========================= */
+
 const searchQuery = ref('')
 
 const suggestions = ref<LocationResult[]>([])
+
+const isSearchFocused = ref(false)
+
+const handleSearchFocus = () => {
+  isSearchFocused.value = true
+}
+
+const handleSearchClose = () => {
+  isSearchFocused.value = false
+  searchQuery.value = ''
+  suggestions.value = []
+}
 
 const handleSearch = async (
   query: string,
@@ -62,11 +82,16 @@ watch(
   },
 )
 
+/* =========================
+   Select Location
+   ========================= */
+
 const handleLocationSelect = (
   location: LocationResult,
 ) => {
   searchQuery.value = ''
   suggestions.value = []
+  isSearchFocused.value = false
 
   router.push({
     path: '/weather-details',
@@ -77,6 +102,10 @@ const handleLocationSelect = (
     },
   })
 }
+
+/* =========================
+   Weather
+   ========================= */
 
 const savedLocations =
   ref<SavedLocation[]>([])
@@ -99,6 +128,10 @@ const weatherLocations =
 const isLoading = ref(true)
 
 const errorMessage = ref('')
+
+/* =========================
+   Local Time
+   ========================= */
 
 const getLocalTime = (
   timezone: number,
@@ -127,6 +160,10 @@ const getLocalTime = (
   )
 }
 
+/* =========================
+   Day / Night
+   ========================= */
+
 const checkIsNight = (
   currentTime: number,
   sunrise: number,
@@ -137,6 +174,10 @@ const checkIsNight = (
     currentTime >= sunset
   )
 }
+
+/* =========================
+   Load Saved Weather
+   ========================= */
 
 const loadSavedWeather =
   async () => {
@@ -196,7 +237,6 @@ const loadSavedWeather =
 
       weatherLocations.value =
         weatherResults
-
     } catch (error) {
       console.error(
         'Home weather loading error:',
@@ -205,11 +245,14 @@ const loadSavedWeather =
 
       errorMessage.value =
         'Unable to load weather data.'
-
     } finally {
       isLoading.value = false
     }
   }
+
+/* =========================
+   Weather Details
+   ========================= */
 
 const openWeatherDetails = (
   location: WeatherLocation,
@@ -224,16 +267,32 @@ const openWeatherDetails = (
   })
 }
 
+/* =========================
+   Mounted
+   ========================= */
+
 onMounted(() => {
   loadSavedWeather()
 })
 </script>
 
 <template>
-  <main class="weather-page">
+  <main
+    class="weather-page"
+    :class="{
+      'weather-page--searching':
+        isSearchFocused,
+    }"
+  >
 
-    <section class="header">
+    <!-- =========================
+         Normal Header
+         ========================= -->
 
+    <section
+      v-if="!isSearchFocused"
+      class="header"
+    >
       <h3>
         Weather
       </h3>
@@ -243,30 +302,43 @@ onMounted(() => {
         :size="26"
         @click="goToProfile"
       />
-
     </section>
 
+    <!-- =========================
+         Loading / Error
+         ========================= -->
+
     <p
-      v-if="isLoading"
+      v-if="isLoading && !isSearchFocused"
       class="status-message"
     >
       Loading weather...
     </p>
 
     <p
-      v-else-if="errorMessage"
+      v-else-if="
+        errorMessage &&
+        !isSearchFocused
+      "
       class="status-message"
     >
       {{ errorMessage }}
     </p>
 
-    <WeatherTemplate
+    <!-- =========================
+         Weather Content
+         ========================= -->
+
+   <WeatherTemplate
       v-else
       v-model:search-query="searchQuery"
       :weather-locations="weatherLocations"
       :suggestions="suggestions"
+      :is-search-focused="isSearchFocused"
       @select-location="handleLocationSelect"
       @open-location="openWeatherDetails"
+      @search-focus="handleSearchFocus"
+      @search-close="handleSearchClose"
     />
 
   </main>
@@ -282,6 +354,11 @@ onMounted(() => {
   min-height: 100vh;
   padding: 24px;
   box-sizing: border-box;
+  background: #ffffff;
+}
+
+.weather-page--searching {
+  padding: 16px 24px 24px;
 }
 
 .header {
