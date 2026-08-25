@@ -12,9 +12,6 @@ withDefaults(
 </script>
 
 <template>
-  /* =========================
-   Button setup
-   ========================= */
   <button
     :class="['app-button', `app-button--${variant}`]"
     :type="type"
