@@ -11,6 +11,7 @@ import {
   addSavedLocation,
   removeSavedLocation,
 } from '../utils/savedLocations'
+import AppIcon from '../components/atoms/AppIcon.vue'
 
 
 /* =========================
@@ -80,7 +81,6 @@ const weather = ref<{
 const isLoading = ref(true)
 const errorMessage = ref('')
 
-
 /* =========================
    Navigation
    ========================= */
@@ -88,7 +88,6 @@ const errorMessage = ref('')
 const goToWeather = () => {
   router.push('/')
 }
-
 
 /* =========================
    Add Location
@@ -234,122 +233,87 @@ const getWeatherIcon = (
    ========================= */
 
 onMounted(async () => {
-
   try {
-
     isLoading.value = true
     errorMessage.value = ''
 
-
     /* Check if already saved */
-
     isSaved.value = isLocationSaved(
       lat,
       lon,
     )
 
-
     /* Get weather */
-
     const data = await getWeather(
       lat,
       lon,
     )
-
 
     console.log(
       'DETAIL PAGE WEATHER:',
       data,
     )
 
-
     /* Get local date + time */
-
     const localDateTime =
       getLocalDateTime(
         data.dt,
         data.timezone,
       )
 
-
     /* Update weather */
-
     weather.value = {
-
       location: data.name,
-
       date: localDateTime.date,
-
       time: localDateTime.time,
-
       description:
         formatDescription(
           data.description,
         ),
-
       icon:
         getWeatherIcon(
           data.icon,
         ),
-
       temperature:
         Math.round(
           data.temperature,
         ),
-
       high:
         Math.round(
           data.high,
         ),
-
       low:
         Math.round(
           data.low,
         ),
-
         hourly: data.hourly,
         daily: data.daily,
-
     }
-
   } catch (error) {
-
     console.error(
       'Weather loading error:',
       error,
     )
-
     errorMessage.value =
       'Unable to load weather data.'
-
   } finally {
-
     isLoading.value = false
-
   }
-
 })
 </script>
 
-
 <template>
-
   <main class="weather-detail-page">
 
-
     <!-- Header -->
-
     <section class="header">
-
       <AppIconButton
         icon="arrowLeft"
         :size="20"
         @click="goToWeather"
       />
 
-
       <!-- DELETE if saved -->
-
       <AppIconButton
         v-if="isSaved"
         icon="delete"
@@ -357,21 +321,16 @@ onMounted(async () => {
         @click="deleteLocation"
       />
 
-
       <!-- ADD if not saved -->
-
       <AppIconButton
         v-else
         icon="plus"
         :size="20"
         @click="addLocation"
       />
-
     </section>
 
-
     <!-- Loading -->
-
     <p
       v-if="isLoading"
       class="status-message"
@@ -379,9 +338,7 @@ onMounted(async () => {
       Loading weather...
     </p>
 
-
     <!-- Error -->
-
     <p
       v-else-if="errorMessage"
       class="status-message"
@@ -389,9 +346,7 @@ onMounted(async () => {
       {{ errorMessage }}
     </p>
 
-
     <!-- Weather Details -->
-
     <WeatherDetailTemplate
       v-else
       :location="weather.location"
@@ -406,58 +361,67 @@ onMounted(async () => {
       :daily="weather.daily"
     />
 
+    <button class="share-button">
+      <text class="share-text">
+        Share Weather
+      </text>
+      <AppIcon name="link" :size="18"/>
+    </button>
   </main>
-
 </template>
 
-
 <style scoped>
-
 .weather-detail-page {
   position: relative;
-
   width: 100%;
   min-height: 100vh;
-
   margin: 0;
   padding: 0;
-
   box-sizing: border-box;
 }
 
 
 .header {
   position: absolute;
-
   top: 20px;
   left: 0;
   right: 0;
-
   z-index: 10;
-
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-
   width: 100%;
-
   padding: 0 13px;
-
   box-sizing: border-box;
-
   color: aliceblue;
 }
 
 
 .status-message {
   padding-top: 100px;
-
   text-align: center;
-
   font-size: 16px;
-
   color: #757575;
 }
 
+.share-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  color: #757575;
+  background-color: transparent;
+  border: none;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 18px;
+  margin-bottom: 20px;
+}
+
+.share-text {
+  font-size: 15px;
+  font-weight: 500;
+}
 </style>
