@@ -123,6 +123,41 @@ const deleteLocation = () => {
   router.push('/')
 }
 
+/* =========================
+   Share Weather
+   ========================= */
+
+const shareWeather = async () => {
+  const shareData = {
+    title: `Weather in ${weather.value.location}`,
+    text: `${weather.value.temperature}° · ${weather.value.description}`,
+    url: window.location.href,
+  }
+
+  if (!navigator.share) {
+    alert(
+      'Sharing is not supported on this browser.',
+    )
+    return
+  }
+
+  try {
+    await navigator.share(shareData)
+  } catch (error) {
+    if (
+      error instanceof DOMException &&
+      error.name === 'AbortError'
+    ) {
+      return
+    }
+
+    console.error(
+      'Weather sharing failed:',
+      error,
+    )
+  }
+}
+
 
 /* =========================
    Get Local Date + Time
@@ -361,11 +396,19 @@ onMounted(async () => {
       :daily="weather.daily"
     />
 
-    <button class="share-button">
-      <text class="share-text">
+    <button
+      class="share-button"
+      type="button"
+      @click="shareWeather"
+    >
+      <span class="share-text">
         Share Weather
-      </text>
-      <AppIcon name="link" :size="18"/>
+      </span>
+
+      <AppIcon
+        name="link"
+        :size="18"
+      />
     </button>
   </main>
 </template>
