@@ -124,7 +124,7 @@ export const getWeather = async (
   })
 
   const daily: DailyForecast[] = Array.from(dailyMap.entries())
-    .slice(0, 5)
+    .slice(0, 6)
     .map(([date, items]) => {
       const temperatures = items.map(
         (item: any) => item.main.temp,

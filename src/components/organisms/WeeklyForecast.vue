@@ -68,7 +68,7 @@ const formatWeather = (
     <div class="weekly-forecast__list">
 
       <WeeklyForcastItem
-        v-for="(forecast, index) in daily.slice(0, 5)"
+        v-for="(forecast, index) in daily.slice(1, 6)"
         :key="index"
         :name="getWeatherIcon(forecast.icon)"
         :day="forecast.day"
